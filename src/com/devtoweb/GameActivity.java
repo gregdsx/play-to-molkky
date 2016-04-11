@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -694,7 +695,7 @@ public class GameActivity extends Activity {
         score.setGravity(Gravity.CENTER_HORIZONTAL);
         headerWrapper.addView(score);
 
-        //Ajout d'un textview pour chaque joueurs
+        //Ajout d'un textview pour chaque joueurs encore en jeu
         for (int i = 0; i < listJoueurs.size(); i++) {
 
             //Conteneur ligne joueur
@@ -708,12 +709,37 @@ public class GameActivity extends Activity {
             newJoueur.setGravity(Gravity.CENTER_HORIZONTAL);
             txtViewWrapper.addView(newJoueur);
 
+            //Conteneur de l'image des croix
+            LinearLayout imgWrapper = new LinearLayout(popup.getContext());
+            imgWrapper.setLayoutParams(lpTxtView);
+            imgWrapper.setGravity(Gravity.CENTER_HORIZONTAL);
+            txtViewWrapper.addView(imgWrapper);
+
+            //Taille de l'image des croix
+            LinearLayout.LayoutParams lpImgViewWrapper = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
             //Croix du joueur
-            TextView croixJoueur = new TextView(popup.getContext());
-            croixJoueur.setLayoutParams(lpTxtView);
-            croixJoueur.setText(String.valueOf(listJoueurs.get(i).getNbrCroix()));
-            croixJoueur.setGravity(Gravity.CENTER_HORIZONTAL);
-            txtViewWrapper.addView(croixJoueur);
+            ImageView croixJoueur = new ImageView(popup.getContext());
+            croixJoueur.setLayoutParams(lpImgViewWrapper);
+            //Controle du nombre de croix
+            int nbrCroixPLayer = listJoueurs.get(i).getNbrCroix();
+
+            switch (nbrCroixPLayer) {
+
+                case 0:
+                    croixJoueur.setBackground(null);
+                    break;
+
+                case 1:
+                    croixJoueur.setBackgroundResource(R.drawable.croix);
+                    break;
+
+                case 2:
+                    croixJoueur.setBackgroundResource(R.drawable.croix2);
+                    break;
+            }
+
+            imgWrapper.addView(croixJoueur);
 
             //Score du joueur
             TextView scoreJoueur = new TextView(popup.getContext());
