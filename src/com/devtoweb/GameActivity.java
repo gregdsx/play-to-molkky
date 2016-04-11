@@ -643,18 +643,18 @@ public class GameActivity extends Activity {
         popup = new Dialog(v.getContext());
         popup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        //Barre bleue du titre à enlever
+        //Barre bleue de séparation du popup entre titre et contenu
         int divierId = popup.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
         View divider = popup.findViewById(divierId);
         if (divider != null) {
             divider.setBackgroundColor(Color.TRANSPARENT);
         }
 
+        LinearLayout.LayoutParams lpPopupWrapper = new LinearLayout.LayoutParams(generalWrapper.getWidth(), generalWrapper.getHeight());
+
         ScrollView scroll = new ScrollView(this);
         scroll.setFillViewport(true);
         popup.setContentView(scroll);
-
-        LinearLayout.LayoutParams lpPopupWrapper = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         //Conteneur du popup
         LinearLayout popupWrapper = new LinearLayout(popup.getContext());
