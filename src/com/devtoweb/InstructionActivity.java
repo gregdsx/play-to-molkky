@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import java.util.ArrayList;
 
@@ -76,7 +77,7 @@ public class InstructionActivity extends FragmentActivity {
         slides.add(Fragment.instantiate(this, FirstSlide.class.getName()));
         slides.add(Fragment.instantiate(this, SecondSlide.class.getName()));
         slides.add(Fragment.instantiate(this, ThirdSlide.class.getName()));
-        slides.add(Fragment.instantiate(this, FourthSlide.class.getName()));
+//        slides.add(Fragment.instantiate(this, FourthSlide.class.getName()));
 
         //Ajout des fragments à l'adaptateur qui permet la navigation (pages)
         pageAdapter = new MyPagerAdapter(super.getSupportFragmentManager(), slides);
@@ -129,10 +130,13 @@ public class InstructionActivity extends FragmentActivity {
         @Override
         public View onCreateView(LayoutInflater li, ViewGroup vg, Bundle bundle) {
 
+            ScrollView scroll = new ScrollView(getContext());
+
             LinearLayout rule1wrapper = new LinearLayout(getContext());
             rule1wrapper.setLayoutParams(lpMatchParent);
             rule1wrapper.setGravity(Gravity.CENTER);
             rule1wrapper.setPadding(5, 20, 5, 0);
+            scroll.addView(rule1wrapper);
 
             TextView rule1 = new TextView(getContext());
             rule1.setText("Le principe du jeu est de faire tomber les quilles en bois à l’aide du lanceur appelé Mölkky. Les quilles sont marquées de 1 à 12. Le premier ou la première à totaliser exactement 50 points gagne la partie.\n"
@@ -141,7 +145,7 @@ public class InstructionActivity extends FragmentActivity {
             rule1.setTextSize(16);
             rule1wrapper.addView(rule1);
 
-            return rule1wrapper;
+            return scroll;
         }
 
     }
@@ -157,11 +161,14 @@ public class InstructionActivity extends FragmentActivity {
         @Override
         public View onCreateView(LayoutInflater li, ViewGroup vg, Bundle bundle) {
 
+            ScrollView scroll = new ScrollView(getContext());
+
             LinearLayout rule2wrapper = new LinearLayout(getContext());
             rule2wrapper.setLayoutParams(lpMatchParent);
             rule2wrapper.setGravity(Gravity.CENTER);
             rule2wrapper.setOrientation(LinearLayout.VERTICAL);
             rule2wrapper.setPadding(5, 20, 5, 0);
+            scroll.addView(rule2wrapper);
 
             TextView rule2 = new TextView(getContext());
             rule2.setText("Le placement des quilles au départ de la partie : " + "\n");
@@ -182,7 +189,7 @@ public class InstructionActivity extends FragmentActivity {
             points.setTextSize(16);
             rule2wrapper.addView(points);
 
-            return rule2wrapper;
+            return scroll;
         }
 
     }
@@ -197,11 +204,14 @@ public class InstructionActivity extends FragmentActivity {
         @Override
         public View onCreateView(LayoutInflater li, ViewGroup vg, Bundle bundle) {
 
+            ScrollView scroll = new ScrollView(getContext());
+
             LinearLayout rule3wrapper = new LinearLayout(getContext());
             rule3wrapper.setLayoutParams(lpMatchParent);
             rule3wrapper.setGravity(Gravity.CENTER);
             rule3wrapper.setOrientation(LinearLayout.VERTICAL);
             rule3wrapper.setPadding(5, 20, 5, 0);
+            scroll.addView(rule3wrapper);
 
             TextView newRule = new TextView(getContext());
             newRule.setText("Régles spéciales :" + "\n");
@@ -219,42 +229,81 @@ public class InstructionActivity extends FragmentActivity {
             rule3.setTextSize(14);
             rule3wrapper.addView(rule3);
 
-            return rule3wrapper;
+            return scroll;
         }
 
     }
 
     /**
-     * Quatrieme règle (fragment)
+     * Quatrieme règle (fragment) Règle pour la prochaine version de play to molkky
      */
-    public static class FourthSlide extends Fragment {
+//    public static class FourthSlide extends Fragment {
+//
+//        private final LinearLayout.LayoutParams lpMatchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//
+//        @Override
+//        public View onCreateView(LayoutInflater li, ViewGroup vg, Bundle bundle) {
+//
+//            LinearLayout rule4wrapper = new LinearLayout(getContext());
+//            rule4wrapper.setLayoutParams(lpMatchParent);
+//            rule4wrapper.setGravity(Gravity.CENTER);
+//            rule4wrapper.setOrientation(LinearLayout.VERTICAL);
+//            rule4wrapper.setPadding(5, 20, 5, 0);
+//
+//            TextView teamRule = new TextView(getContext());
+//            teamRule.setText("Régles en équipe :" + "\n");
+//            teamRule.setTextSize(16);
+//            teamRule.setTextColor(Color.BLACK);
+//            rule4wrapper.addView(teamRule);
+//
+//            TextView rule4 = new TextView(getContext());
+//            rule4.setText("- Les joueurs des équipes jouent tour à tour \n"
+//                    + "\n" + "- Si une équipe égalise le score d'une autre équipe, l'équipe qui s'est faite égalisé retombe à zéro, ou à 25 si son score était supérieur \n"
+//                    + "\n" + "- Si une équipe manque 3 lancers consécutif, elle redescend à 0, ou à 25 si son score était supérieur");
+//            rule4.setTextColor(Color.BLACK);
+//            rule4.setTextSize(14);
+//            rule4wrapper.addView(rule4);
+//
+//            return rule4wrapper;
+//        }
+//
+//    }
+    /**
+     * Cinquieme règle (fragment)
+     */
+    public static class FifthSlide extends Fragment {
 
         private final LinearLayout.LayoutParams lpMatchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         @Override
         public View onCreateView(LayoutInflater li, ViewGroup vg, Bundle bundle) {
 
-            LinearLayout rule4wrapper = new LinearLayout(getContext());
-            rule4wrapper.setLayoutParams(lpMatchParent);
-            rule4wrapper.setGravity(Gravity.CENTER);
-            rule4wrapper.setOrientation(LinearLayout.VERTICAL);
-            rule4wrapper.setPadding(5, 20, 5, 0);
+            ScrollView scroll = new ScrollView(getContext());
 
-            TextView teamRule = new TextView(getContext());
-            teamRule.setText("Régles en équipe :" + "\n");
-            teamRule.setTextSize(16);
-            teamRule.setTextColor(Color.BLACK);
-            rule4wrapper.addView(teamRule);
+            LinearLayout rule3wrapper = new LinearLayout(getContext());
+            rule3wrapper.setLayoutParams(lpMatchParent);
+            rule3wrapper.setGravity(Gravity.CENTER);
+            rule3wrapper.setOrientation(LinearLayout.VERTICAL);
+            rule3wrapper.setPadding(5, 20, 5, 0);
+            scroll.addView(rule3wrapper);
 
-            TextView rule4 = new TextView(getContext());
-            rule4.setText("- Les joueurs des équipes jouent tour à tour \n"
-                    + "\n" + "- Si une équipe égalise le score d'une autre équipe, l'équipe qui s'est faite égalisé retombe à zéro, ou à 25 si son score était supérieur \n"
-                    + "\n" + "- Si une équipe manque 3 lancers consécutif, elle redescend à 0, ou à 25 si son score était supérieur");
-            rule4.setTextColor(Color.BLACK);
-            rule4.setTextSize(14);
-            rule4wrapper.addView(rule4);
+            TextView newRule = new TextView(getContext());
+            newRule.setText("Comment utiliser Play to Mölkky :" + "\n");
+            newRule.setTextSize(16);
+            newRule.setTextColor(Color.BLACK);
+            rule3wrapper.addView(newRule);
 
-            return rule4wrapper;
+            TextView rule3 = new TextView(getContext());
+            rule3.setText("- Une quille n’est considérée comme abattue que si elle est tombée entièrement sur le sol et ne repose sur aucune autre \n"
+                    + "\n" + "- Si un joueur manque un lancer, il ne marque donc pas de points et obtient une croix. Si le joueur manque trois lancers consécutifs, il obtient 3 croix et est éliminé de la partie. \n"
+                    + "Un lancer réussi remet les croix à zéro (maximum 2 croix)\n" + "\n"
+                    + "- Si un joueur dépasse 50 points, il retombe immédiatement à 25 points \n" + "\n"
+                    + "- Le Mölkky (lanceur) doit être lancé d'un geste du bas vers le haut, comme au bowling. Le Mölkky peut rebondir sur le sol ou toucher directement les quilles");
+            rule3.setTextColor(Color.BLACK);
+            rule3.setTextSize(14);
+            rule3wrapper.addView(rule3);
+
+            return scroll;
         }
 
     }

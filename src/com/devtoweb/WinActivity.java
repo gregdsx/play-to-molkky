@@ -66,7 +66,6 @@ public class WinActivity extends Activity {
         generalWrapper.setLayoutParams(lpMatchParent);
         generalWrapper.setBackgroundResource(R.drawable.background);
         generalWrapper.setPadding(20, 20, 20, 20);
-
         scroll.addView(generalWrapper);
 
         /**
@@ -98,7 +97,7 @@ public class WinActivity extends Activity {
         scoreWrapper.setLayoutParams(sizeScoreWrapper);
         scoreWrapper.setGravity(Gravity.CENTER_VERTICAL);
         scoreWrapper.setBackgroundResource(R.drawable.panneau_score);
-        scoreWrapper.setId(63985);
+        scoreWrapper.setId(623985);
         generalWrapper.addView(scoreWrapper);
 
         //Création du tableau des scrores
@@ -107,7 +106,7 @@ public class WinActivity extends Activity {
         /**
          * Conteneur des boutons
          */
-        RelativeLayout.LayoutParams sizeBtnWrapper = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams sizeBtnWrapper = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         sizeBtnWrapper.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 
         LinearLayout btnWrapper = new LinearLayout(this);
@@ -152,8 +151,9 @@ public class WinActivity extends Activity {
 
         //Boite de dialogue
         final Dialog dial = new Dialog(this);
+        dial.setTitle("Play to Mölkky");
 
-        LinearLayout.LayoutParams sizeDial = new LinearLayout.LayoutParams(250, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams sizeDial = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         LinearLayout dialWrapper = new LinearLayout(this);
         dialWrapper.setOrientation(LinearLayout.VERTICAL);
@@ -162,9 +162,9 @@ public class WinActivity extends Activity {
         //Texte d'avertissement
         TextView warning = new TextView(this);
         warning.setLayoutParams(lpWrapContent);
-        warning.setText("Voulez vous vraiment quitter cette partie et retourner au menu principal ?");
+        warning.setText("Voulez vous vraiment quitter l'application ?");
         warning.setTextColor(Color.WHITE);
-        warning.setTextSize(12);
+        warning.setTextSize(16);
         warning.setGravity(Gravity.CENTER_HORIZONTAL);
         dialWrapper.addView(warning);
 
@@ -183,9 +183,9 @@ public class WinActivity extends Activity {
 
             public void onClick(View v) {
 
-                Intent intent = new Intent(WinActivity.this, StartActivity.class);
-                startActivity(intent);
-                finish();
+                //Sortie de l'application
+                System.exit(0);
+
             }
         });
         btnsWrapper.addView(yes);
@@ -385,6 +385,14 @@ public class WinActivity extends Activity {
         intent.putExtra("game", gameToJson);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+
+        System.out.println("tableau bottom = " + generalWrapper.getChildAt(1).getBottom());
+        System.out.println("tableau top = " + generalWrapper.getChildAt(1).getTop());
+        System.out.println("bouton top = " + generalWrapper.getChildAt(2).getTop());
     }
 
 }
