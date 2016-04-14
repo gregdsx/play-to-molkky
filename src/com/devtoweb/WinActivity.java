@@ -75,6 +75,7 @@ public class WinActivity extends Activity {
         logoWrapper.setLayoutParams(lpWrapContent);
         logoWrapper.setLayoutDirection(LinearLayout.HORIZONTAL);
         logoWrapper.setGravity(Gravity.CENTER);
+        logoWrapper.setId(804512);
         generalWrapper.addView(logoWrapper);
 
         LinearLayout.LayoutParams lpLogo = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -90,14 +91,14 @@ public class WinActivity extends Activity {
          */
         RelativeLayout.LayoutParams sizeScoreWrapper = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         sizeScoreWrapper.setMargins(20, 5, 20, 15);
-        sizeScoreWrapper.addRule(RelativeLayout.CENTER_IN_PARENT);
+        sizeScoreWrapper.addRule(RelativeLayout.BELOW, logoWrapper.getId());
 
         scoreWrapper = new LinearLayout(this);
         scoreWrapper.setOrientation(LinearLayout.VERTICAL);
         scoreWrapper.setLayoutParams(sizeScoreWrapper);
         scoreWrapper.setGravity(Gravity.CENTER_VERTICAL);
         scoreWrapper.setBackgroundResource(R.drawable.panneau_score);
-        scoreWrapper.setId(623985);
+        scoreWrapper.setId(325410);
         generalWrapper.addView(scoreWrapper);
 
         //Création du tableau des scrores
@@ -106,13 +107,12 @@ public class WinActivity extends Activity {
         /**
          * Conteneur des boutons
          */
-        RelativeLayout.LayoutParams sizeBtnWrapper = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        sizeBtnWrapper.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        RelativeLayout.LayoutParams sizeBtnWrapper = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        sizeBtnWrapper.addRule(RelativeLayout.BELOW, scoreWrapper.getId());
 
         LinearLayout btnWrapper = new LinearLayout(this);
         btnWrapper.setLayoutParams(sizeBtnWrapper);
         btnWrapper.setOrientation(LinearLayout.HORIZONTAL);
-        btnWrapper.setBackgroundColor(Color.BLUE);
         btnWrapper.setId(937);
         generalWrapper.addView(btnWrapper);
 
