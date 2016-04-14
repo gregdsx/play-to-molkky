@@ -285,7 +285,15 @@ public class SetGameActivity extends Activity implements TextWatcher {
             flagPlayer++;
 
         } else {
-            Toast.makeText(generalWrapper.getContext(), "Nombre de joueurs / équipes maximum atteint (6 max)", Toast.LENGTH_SHORT).show();
+
+            //Si toast vient d'etre crée ou si il est déja visible, pas de nouvel affichage du toast
+            if (toast == null || toast.getView().getWindowVisibility() != View.VISIBLE) {
+                toast = Toast.makeText(getApplicationContext(),
+                        "Nombre de joueurs maximum atteint (6 max)", Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
+                toast.cancel();
+            }
         }
     }
 
