@@ -11,7 +11,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import com.controllers.ViewsMaker;
 
 /**
  * Choix du mode de jeu : seul ou en équipe

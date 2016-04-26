@@ -18,9 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Space;
 import android.widget.TextView;
-import com.controllers.ViewsMaker;
-import com.object.Game;
-import com.object.Player;
+import com.devtoweb.factory.GameFactory;
+import com.devtoweb.factory.Player;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -34,7 +33,6 @@ public class GameActivity extends Activity {
     private LinearLayout wrapperMolkky;
     private final RelativeLayout.LayoutParams lpMatchParent = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     private final RelativeLayout.LayoutParams sizeRows = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-    private Bundle bundle;
     private TextView displayScorePlayer, displayNamePlayer;
     private Button backPlayer;
     private Dialog popup;
@@ -56,11 +54,7 @@ public class GameActivity extends Activity {
     };
 
     //Objets de gestion de partie
-    private Game game;
     private Player playerFocus;
-    private ArrayList<Player> listJoueurs;
-    private final ArrayList<Player> listJoueurOut = new ArrayList<Player>();
-    private int playerIdFocus = 0;
     private int lastScorePlayer, lastCroixPlayer;
     private final ArrayList<Integer> listIdBtnPressed = new ArrayList<Integer>();
 
@@ -68,16 +62,6 @@ public class GameActivity extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        //Récupération extras envoyés depuis SetGameActivity ou WinActivity
-        bundle = getIntent().getExtras();
-        String gameFromJson = bundle.getString("game");
-
-        /**
-         * Récupération de l'objet Game via Json
-         */
-        game = Game.jsonToGame(gameFromJson);
-        listJoueurs = game.getListJoueurs();
 
         generalWrapper = new RelativeLayout(this);
         generalWrapper.setLayoutParams(lpMatchParent);
@@ -106,7 +90,7 @@ public class GameActivity extends Activity {
         displayNamePlayer.setTextColor(Color.BLACK);
         displayNamePlayer.setTextSize(25);
         displayNamePlayer.setGravity(Gravity.LEFT);
-        displayNamePlayer.setText(game.getListJoueurs().get(0).getName());
+        displayNamePlayer.setText(getPlayerFocus().getName());
         headerWrapper.addView(displayNamePlayer);
 
         //Affichage du score
@@ -226,7 +210,6 @@ public class GameActivity extends Activity {
         /**
          * FIN MOLKKY-------------------------------------------------------------------------
          */
-
         /**
          * Conteneur des boutons précédent, ok et l'affichage du score
          */
@@ -273,7 +256,7 @@ public class GameActivity extends Activity {
             public void onClick(View v) {
 
                 //Retour joueur précédent
-                getLastPlayer(playerFocus);
+                getLastPlayer();
             }
         });
         footerWrapper.addView(backPlayer);
@@ -313,7 +296,7 @@ public class GameActivity extends Activity {
 
         //Boite de dialogue
         final Dialog dial = new Dialog(this);
-        dial.setTitle("Plat to Mölkky");
+        dial.setTitle("Play to Mölkky");
 
         LinearLayout.LayoutParams sizeDial = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -373,42 +356,9 @@ public class GameActivity extends Activity {
      */
     private Player getPlayerFocus() {
 
-        int nbrJoueursPartie = game.getNbrJoueurs();
-
-        //Si l'id du joueur suivant n'existe pas, retour au premier joueur
-        if (playerIdFocus >= nbrJoueursPartie) {
-            playerIdFocus = 0;
-        }
-
-        listJoueurs = game.getListJoueurs();
-        playerFocus = listJoueurs.get(playerIdFocus);
+        playerFocus = GameFactory.getGameServiceImpl().getPlayerFocus();
 
         return playerFocus;
-    }
-
-    /**
-     * Affichage de la bonne image correspondant au bon nombre de croix du joueur
-     *
-     * @param player : joueur en cours
-     */
-    private void displayNbrCroixPlayerFocus(Player player) {
-
-        int nbrCroixPLayer = player.getNbrCroix();
-
-        switch (nbrCroixPLayer) {
-
-            case 0:
-                displayNamePlayer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                break;
-
-            case 1:
-                displayNamePlayer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.croix, 0);
-                break;
-
-            case 2:
-                displayNamePlayer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.croix2, 0);
-                break;
-        }
     }
 
     /**
@@ -482,86 +432,27 @@ public class GameActivity extends Activity {
      * @param playerFocus = joueur en cours
      * @param scorePlayerFocus = score récupéré depuis l'affichage du score
      */
-    private void setScorePlayerFocus(View v, Player playerFocus, int scorePlayerFocus) {
+    private void setScorePlayerFocus(View v, Player playerFocus, int score) {
 
-        //Vérification si joueur en cours à gagné ou non
-        boolean flag = false;
+        //Vérification si il y a un gagnant ou non
+        boolean flag;
 
         //Enregistrement du score du joueur pour une éventuelle suppression (soustraction du score enregistré à tors) avec le btn BackPlayer
-        lastScorePlayer = scorePlayerFocus;
+        lastScorePlayer = score;
 
-        //Enregistrement du score du joueur en cours
-        playerFocus.setScore(playerFocus.getScore() + scorePlayerFocus);
+        //Récupération dernier nombre de croix pour une éventuelle suppression avec le btn BackPlayer
+        lastCroixPlayer = playerFocus.getNbrCroix();
 
-        //Si lancé manqué on ajoute une croix en plus au joueur en cours
-        if (scorePlayerFocus == 0) {
+        //Check nombre de joueurs avant enregistrement score
+        int nbrJoueursInGame = GameFactory.getGameServiceImpl().getGame().getNbrJoueurs();
 
-            //Récupération dernier nombre de croix pour une éventuelle suppression avec le btn BackPlayer
-            lastCroixPlayer = playerFocus.getNbrCroix();
+        //Gestion de l'enregistrement du score, retour du flag false joueur suivant, true fin de partie
+        flag = GameFactory.getGameServiceImpl().setScorePlayerFocus(playerFocus, score);
 
-            //Ajout de la croix au joueur
-            playerFocus.setNbrCroix(playerFocus.getNbrCroix() + 1);
+        //Check nombre de joueur après enregistrement score
+        int nbrJoueursInGameAfterSetScore = GameFactory.getGameServiceImpl().getGame().getNbrJoueurs();
 
-            //Si le joueur en cours obtient 3 croix il est supprimé du jeu
-            if (playerFocus.getNbrCroix() == game.getNbrCroixMax()) {
-
-                //Ajout du joueur supprimé à la liste des perdants
-                listJoueurOut.add(playerFocus);
-
-                //Suppression du joueur de la liste dynamique
-                listJoueurs.remove(playerFocus);
-
-                //Suppression du joueur de la partie en cours (objet Game)
-                game.setListJoueurs(listJoueurs);
-                game.setNbrJoueurs(game.getListJoueurs().size());
-
-                //Si suppression du dernier adversaire, le gagnant est désigné
-                if (game.getNbrJoueurs() < 2) {
-
-                    //Récupération du dernier joueur
-                    Player playerWinnner = listJoueurs.get(0);
-
-                    //Victoire du dernier joueur en lice
-                    flag = true;
-                    playerWinGame(playerWinnner);
-
-                } else {
-                    //Gestion de l'id du joueur à prendre en focus après suppression d'un joueur dans la liste
-                    //si joueur 3 supprimé -> joueur 4 passe joueur 3, 5 passe 4...
-                    playerIdFocus--;
-                }
-            }
-
-            //Si le joueur en cours dépasse le score max, le score du joueur en cours retombe à 25
-        } else if (playerFocus.getScore() > game.getScoreMax()) {
-
-            playerFocus.setScore(25);
-
-            //Récupération dernier nombre de croix
-            lastCroixPlayer = playerFocus.getNbrCroix();
-
-            playerFocus.setNbrCroix(0);
-
-            //Si le joueur en cours arrive à 50, le jeu est terminé
-        } else if (playerFocus.getScore() == game.getScoreMax()) {
-
-            playerFocus.setNbrCroix(0);
-
-            //Victoire du joueur en cours
-            flag = true;
-            playerWinGame(playerFocus);
-
-            //Sinon remise à 0 des croix
-        } else {
-
-            //Récupération dernier nombre de croix
-            lastCroixPlayer = playerFocus.getNbrCroix();
-
-            playerFocus.setNbrCroix(0);
-        }
-
-        //flag = false : jeu en cours
-        //flag = true : fin de partie, un gagnant a été déterminé, plus de modifications sur l'activité
+        //si flag = false : pas de gagnant, la partie continue
         if (!flag) {
 
             v.setBackgroundResource(R.drawable.quille_touched);
@@ -569,68 +460,106 @@ public class GameActivity extends Activity {
             //Remise à zéro du molkky (boutons touchés), de la liste de quilles touchées et de l'affichage du score
             resetMolkky(wrapperMolkky);
 
-            //Passage au joueur suivant
-            playerIdFocus++;
-
-            //Récupération du joueur suivant le joueur focus
-            Player playerNext = getPlayerFocus();
-
             //Nom du nouveau joueur
-            displayNamePlayer.setText(playerNext.getName());
+            displayNamePlayer.setText(GameFactory.getGameServiceImpl().getPlayerFocus().getName());
 
             //Affichage de l'image correspondant au nombre de croix du joueur
-            displayNbrCroixPlayerFocus(playerNext);
+            displayNbrCroixPlayerFocus(GameFactory.getGameServiceImpl().getPlayerFocus());
 
-            //Apparition du bouton de retour au joueur précédent
-            backPlayer.setVisibility(View.VISIBLE);
+            //Si il n'y a pas eu de suppression de joueurs, backPlayer deviens disponible
+            //Si un joueur est supprimé, pas de retour en arrière possible
+            if (nbrJoueursInGame == nbrJoueursInGameAfterSetScore) {
+
+                backPlayer.setVisibility(View.VISIBLE);
+
+            } else {
+                backPlayer.setVisibility(View.INVISIBLE);
+            }
+
+            //si flag = true : fin de partie, un gagnant a été déterminé, pas de modifications sur l'activité
+        } else {
+            playerWinGame();
         }
     }
 
     /**
-     * Un joueur a gagné la partie, fin de la partie, passage WinActivity
+     * Affichage de la bonne image correspondant au bon nombre de croix du joueur
      *
-     * @param playerWinner
+     * @param player : joueur en cours
      */
-    private void playerWinGame(Player playerWinner) {
+    private void displayNbrCroixPlayerFocus(Player player) {
 
-        //Liste dynamique des joueurs éliminés sous forme de json à envoyer à WinActivity
-        ArrayList<CharSequence> listJsonJoueurOut = new ArrayList<CharSequence>();
+        int nbrCroixPLayer = player.getNbrCroix();
 
-        //Récupération de tous les éliminés
-        for (int i = 0; i < listJoueurOut.size(); i++) {
+        switch (nbrCroixPLayer) {
 
-            //Récupération du joueur éliminé
-            Player joueurOut = listJoueurOut.get(i);
+            case 0:
+                displayNamePlayer.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                break;
 
-            //Ajout du joueur éliminé sous forme de Json
-            listJsonJoueurOut.add(Player.playerToJson(joueurOut));
+            case 1:
+                displayNamePlayer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.croix, 0);
+                break;
+
+            case 2:
+                displayNamePlayer.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.croix2, 0);
+                break;
         }
+    }
 
-        //Liste dynamique des joueurs encore dans la partie sous forme de json à envoyer à WinActivity
-        ArrayList<CharSequence> listJsonJoueur = new ArrayList<CharSequence>();
+    /**
+     * Déclenchement dans setScorePlayerFocus | Remise à zéro des quilles pour nouveau joueur
+     *
+     * @param molkkyWrapper = conteneur des quilles
+     */
+    private void resetMolkky(LinearLayout molkkyWrapper) {
 
-        //Récupération de tous les joueurs encore en jeu
-        for (int i = 0; i < listJoueurs.size(); i++) {
+        Button quille;
 
-            //Récupération du joueur
-            Player joueur = listJoueurs.get(i);
+        //Suppression des quilles dans la liste dynamique
+        listIdBtnPressed.clear();
 
-            //Ajout du joueur sous forme de Json
-            listJsonJoueur.add(Player.playerToJson(joueur));
+        //Récupération des enfants du conteneur molkky
+        for (int i = 0; i < molkkyWrapper.getChildCount(); i++) {
+
+            //Rangée de quilles
+            RelativeLayout rl = (RelativeLayout) molkkyWrapper.getChildAt(i);
+
+            //Pour chaque quilles dans la rangée
+            for (int j = 0; j < rl.getChildCount(); j++) {
+
+                //Si c'est bien une quille (pas un Space)
+                if (!rl.getChildAt(j).getClass().toString().equals("class android.widget.Space")) {
+
+                    //Marquage de la quille comme non touchée et changement background
+                    quille = (Button) rl.getChildAt(j);
+                    quille.setSelected(false);
+                    quille.setBackgroundResource(R.drawable.quille);
+                }
+            }
         }
+        //Remise à zéro de l'affichage du score
+        displayScorePlayer.setText("0");
+    }
 
-        Intent intent = new Intent(GameActivity.this, WinActivity.class);
+    /**
+     * Click sur BackPlayer | Revenir au joueur précédent le joueur en cours
+     *
+     * @param playerFocusOff = joueur en cours voulant revenir au joueur précédent
+     */
+    private void getLastPlayer() {
 
-        //Nom du gagnant
-        intent.putExtra("nameWinner", playerWinner.getName());
-        //Ajout des éliminés
-        intent.putCharSequenceArrayListExtra("listJoueurOut", listJsonJoueurOut);
-        //Ajout des joueurs encore en jeu
-        intent.putCharSequenceArrayListExtra("listJoueurs", listJsonJoueur);
-        //Ajout du type de partie
-        intent.putExtra("typePartie", game.getKindGame());
-        startActivity(intent);
-        finish();
+        //Le joueur précédent deviens le joueur en cours
+        playerFocus = GameFactory.getGameServiceImpl().getLastPlayer(lastScorePlayer, lastCroixPlayer);
+
+        //Modification du Nom affiché
+        displayNamePlayer.setText(playerFocus.getName());
+
+        //Disparition du bouton de retour au joueur précédent (empeche les multiples retours en arriere)
+        backPlayer.setVisibility(View.INVISIBLE);
+
+        //Remise à zéro du molkky
+        resetMolkky(wrapperMolkky);
     }
 
     /**
@@ -695,6 +624,8 @@ public class GameActivity extends Activity {
         score.setGravity(Gravity.CENTER_HORIZONTAL);
         headerWrapper.addView(score);
 
+        ArrayList<Player> listJoueurs = GameFactory.getGameServiceImpl().getGame().getListJoueurs();
+
         //Ajout d'un textview pour chaque joueurs encore en jeu
         for (int i = 0; i < listJoueurs.size(); i++) {
 
@@ -746,7 +677,7 @@ public class GameActivity extends Activity {
             scoreJoueur.setLayoutParams(lpTxtView);
             scoreJoueur.setText(String.valueOf(listJoueurs.get(i).getScore()));
 
-            if (Game.getPlayerMaxScore(listJoueurs) == listJoueurs.get(i).getScore()) {
+            if (GameFactory.getGameServiceImpl().getGame().getPlayerMaxScore(listJoueurs) == listJoueurs.get(i).getScore()) {
                 scoreJoueur.setTextColor(Color.YELLOW);
             }
 
@@ -757,84 +688,17 @@ public class GameActivity extends Activity {
     }
 
     /**
-     * Déclenchement dans setScorePlayerFocus | Remise à zéro des quilles pour nouveau joueur
+     * Un joueur a gagné la partie, fin de la partie, passage WinActivity
      *
-     * @param molkkyWrapper = conteneur des quilles
+     * @param playerWinner
      */
-    private void resetMolkky(LinearLayout molkkyWrapper) {
+    private void playerWinGame() {
 
-        Button quille;
+        GameFactory.getGameServiceImpl().playerWinGame();
 
-        //Suppression des quilles dans la liste dynamique
-        listIdBtnPressed.clear();
-
-        //Récupération des enfants du conteneur molkky
-        for (int i = 0; i < molkkyWrapper.getChildCount(); i++) {
-
-            //Rangée de quilles
-            RelativeLayout rl = (RelativeLayout) molkkyWrapper.getChildAt(i);
-
-            //Pour chaque quilles dans la rangée
-            for (int j = 0; j < rl.getChildCount(); j++) {
-
-                //Si c'est bien une quille (pas un Space)
-                if (!rl.getChildAt(j).getClass().toString().equals("class android.widget.Space")) {
-
-                    //Marquage de la quille comme non touchée et changement background
-                    quille = (Button) rl.getChildAt(j);
-                    quille.setSelected(false);
-                    quille.setBackgroundResource(R.drawable.quille);
-                }
-            }
-        }
-        //Remise à zéro de l'affichage du score
-        displayScorePlayer.setText("0");
+        Intent intent = new Intent(GameActivity.this, WinActivity.class);
+        startActivity(intent);
+        finish();
     }
 
-    /**
-     * Click sur BackPlayer | Revenir au joueur précédent le joueur en cours
-     *
-     * @param playerFocusOff = joueur en cours voulant revenir au joueur précédent
-     */
-    private void getLastPlayer(Player playerFocusOff) {
-
-        //Id du dernier joueur dans la liste
-        int lastIdInGameList = game.getListJoueurs().size() - 1;
-
-        //Récupération du dernier joueur à avoir joué
-        Player lastPlayerFocus;
-
-        //Si le joueur en cours est le premier de la liste
-        if (playerFocusOff.getId() == 0) {
-
-            //On récupère le dernier de cette liste
-            lastPlayerFocus = game.getListJoueurs().get(lastIdInGameList);
-
-        } else {
-
-            //On récupère le joueur avec l'id précédent
-            lastPlayerFocus = game.getListJoueurs().get(playerFocusOff.getId() - 1);
-        }
-
-        //Le joueur précédent deviens le joueur en cours
-        playerFocus = lastPlayerFocus;
-
-        //Soustraction du dernier score enregistré par le nouveau joueur en cours
-        playerFocus.setScore(playerFocus.getScore() - lastScorePlayer);
-
-        //Récupération du dernier nombre de croix
-        playerFocus.setNbrCroix(lastCroixPlayer);
-
-        //Id du joueur en cours deviens celui du nouveau joueur
-        playerIdFocus = playerFocus.getId();
-
-        //Modification du Nom affiché
-        displayNamePlayer.setText(playerFocus.getName());
-
-        //Disparition du bouton de retour au joueur précédent (empeche les multiples retours en arriere)
-        backPlayer.setVisibility(View.INVISIBLE);
-
-        //Remise à zéro du molkky
-        resetMolkky(wrapperMolkky);
-    }
 }

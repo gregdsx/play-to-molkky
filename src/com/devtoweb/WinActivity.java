@@ -22,9 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import com.controllers.ViewsMaker;
-import com.object.Game;
-import com.object.Player;
+import com.devtoweb.factory.GameFactory;
+import com.devtoweb.factory.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -38,25 +37,12 @@ public class WinActivity extends Activity {
     private LinearLayout scoreWrapper;
     private final RelativeLayout.LayoutParams lpMatchParent = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     private final LinearLayout.LayoutParams lpWrapContent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-    private ArrayList<CharSequence> listJoueursOutJson, listJoueursJson;
-    private ArrayList<Player> listJoueurs, listJoueursOut;
     private String kindGame;
 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        Bundle bundle = getIntent().getExtras();
-
-        //Liste des joueurs encore en jeu sous forme de json 
-        listJoueursJson = bundle.getCharSequenceArrayList("listJoueurs");
-
-        //Liste des joueurs éliminés sous forme de json 
-        listJoueursOutJson = bundle.getCharSequenceArrayList("listJoueurOut");
-
-        //Type de partie
-        kindGame = bundle.getCharSequence("typePartie").toString();
 
         ScrollView scroll = new ScrollView(this);
         scroll.setFillViewport(true);
@@ -102,7 +88,7 @@ public class WinActivity extends Activity {
         generalWrapper.addView(scoreWrapper);
 
         //Création du tableau des scrores
-        setAndDisplayScoresTable(listJoueursJson, listJoueursOutJson);
+        setAndDisplayScoresTable();
 
         /**
          * Conteneur des boutons
@@ -125,7 +111,7 @@ public class WinActivity extends Activity {
                 v.setBackgroundResource(R.drawable.bouton_touched);
 
                 //Début nouvelle partie
-                restartNewGame(listJoueurs, listJoueursOut);
+                restartNewGame();
             }
         });
         btnWrapper.addView(back);
@@ -244,32 +230,12 @@ public class WinActivity extends Activity {
      * @param listJoueursJson
      * @param listJoueursOutJson
      */
-    private void setAndDisplayScoresTable(ArrayList<CharSequence> listJoueursJson, ArrayList<CharSequence> listJoueursOutJson) {
+    private void setAndDisplayScoresTable() {
 
         //Joueurs en cours
-        listJoueurs = new ArrayList<Player>();
+        ArrayList<Player> listJoueurs = GameFactory.getGameServiceImpl().getGame().getListJoueurs();
         //Joueurs éliminés
-        listJoueursOut = new ArrayList<Player>();
-
-        //Récupération des joueurs encore en jeu
-        for (int i = 0; i < listJoueursJson.size(); i++) {
-
-            //Conversion des joueurs Json en Objet Joueurs
-            Player player = Player.jsonToPlayer(listJoueursJson.get(i).toString());
-
-            //Ajout du joueur dans la liste
-            listJoueurs.add(player);
-        }
-
-        //Récupération des joueurs éliminés
-        for (int i = 0; i < listJoueursOutJson.size(); i++) {
-
-            //Conversion des joueurs Json en Objet Joueurs
-            Player playerOut = Player.jsonToPlayer(listJoueursOutJson.get(i).toString());
-
-            //Ajout du joueur dans la liste
-            listJoueursOut.add(playerOut);
-        }
+        ArrayList<Player> listJoueursOut = GameFactory.getGameServiceImpl().getGame().getListJoueursOut();
 
         //Tri des joueurs encore en jeu par score croissant
         Collections.sort(listJoueurs);
@@ -354,45 +320,37 @@ public class WinActivity extends Activity {
      * @param listJoueur
      * @param listJoueurOut
      */
-    private void restartNewGame(ArrayList<Player> listJoueur, ArrayList<Player> listJoueurOut) {
+    private void restartNewGame() {
 
+        //Nouvelle liste pour un nouvel ordre de jeu, le premier à jouer est le gagnant
         ArrayList<Player> listJoueurNewGame = new ArrayList<Player>();
 
         //Récupération des joueurs non éliminés
-        for (Player player : listJoueur) {
+        for (Player player : GameFactory.getGameServiceImpl().getGame().getListJoueurs()) {
             listJoueurNewGame.add(player);
         }
 
         //Récupérations des joueurs éliminés
-        for (Player player : listJoueurOut) {
+        for (Player player : GameFactory.getGameServiceImpl().getGame().getListJoueursOut()) {
             listJoueurNewGame.add(player);
         }
 
         //Création nouvelle partie : nombre de joueurs, liste des joueurs, type de partie
-        Game game = new Game(listJoueurNewGame.size(), listJoueurNewGame, kindGame);
+        GameFactory.getGameServiceImpl().setNewGame(listJoueurNewGame.size(), listJoueurNewGame, kindGame);
 
         //Remise à zéro de la partie
-        for (Player player : game.getListJoueurs()) {
+        for (int i = 0; i < GameFactory.getGameServiceImpl().getGame().getListJoueurs().size(); i++) {
 
+            Player player = GameFactory.getGameServiceImpl().getGame().getListJoueurs().get(i);
+
+            player.setId(i);
             player.setScore(0);
             player.setNbrCroix(0);
         }
 
-        //Objet Game transformé en String Json
-        String gameToJson = Game.gameToJson(game);
-
         Intent intent = new Intent(WinActivity.this, GameActivity.class);
-        intent.putExtra("game", gameToJson);
         startActivity(intent);
         finish();
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-
-        System.out.println("tableau bottom = " + generalWrapper.getChildAt(1).getBottom());
-        System.out.println("tableau top = " + generalWrapper.getChildAt(1).getTop());
-        System.out.println("bouton top = " + generalWrapper.getChildAt(2).getTop());
     }
 
 }

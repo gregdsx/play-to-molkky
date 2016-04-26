@@ -1,9 +1,10 @@
-package com.object;
+package com.devtoweb.factory;
 
 import java.util.ArrayList;
 import com.google.gson.Gson;
 
 /**
+ * Objet principal de l'application | Gestion de la partie
  *
  * @author Greg27
  */
@@ -11,6 +12,7 @@ public class Game{
 
     private int nbrJoueurs;
     private ArrayList<Player> listJoueurs;
+    private ArrayList<Player> listJoueursOut = new ArrayList<Player>();
     private String kindGame;
     private final int scoreMax = 50;
     private final int nbrCroixMax = 3;
@@ -35,6 +37,14 @@ public class Game{
 
     public void setListJoueurs(ArrayList<Player> listJoueurs) {
         this.listJoueurs = listJoueurs;
+    }
+
+    public ArrayList<Player> getListJoueursOut() {
+        return listJoueursOut;
+    }
+
+    public void setListJoueursOut(ArrayList<Player> listJoueursOut) {
+        this.listJoueursOut = listJoueursOut;
     }
 
     public int getScoreMax() {
@@ -65,7 +75,7 @@ public class Game{
      * @param listPlayers
      * @return
      */
-    public static int getPlayerMaxScore(ArrayList<Player> listPlayers) {
+    public int getPlayerMaxScore(ArrayList<Player> listPlayers) {
 
         int maxScore = 0;
 

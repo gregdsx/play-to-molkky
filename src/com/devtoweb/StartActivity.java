@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.controllers.ViewsMaker;
 
 /**
  * Première page accessible à l'utilisateur Plusieurs choix disponibles Nouvelle partie, score, options

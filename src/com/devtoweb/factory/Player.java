@@ -1,4 +1,4 @@
-package com.object;
+package com.devtoweb.factory;
 
 import com.google.gson.Gson;
 
@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 public class Player implements Comparable<Player> {
 
     private final String name;
-    private final int id;
+    private int id;
     private int score;
     private int nbrCroix;
 
@@ -27,6 +27,10 @@ public class Player implements Comparable<Player> {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getScore() {

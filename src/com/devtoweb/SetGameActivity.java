@@ -18,9 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.controllers.ViewsMaker;
-import com.object.Player;
-import com.object.Game;
+import com.devtoweb.factory.GameFactory;
+import com.devtoweb.factory.Player;
 import java.util.ArrayList;
 
 /**
@@ -37,7 +36,6 @@ public class SetGameActivity extends Activity implements TextWatcher {
     private Bundle bundle;
     private EditText champ2;
     private int flagPlayer = 2;
-    private Game game;
     private Toast toast;
 
     @Override
@@ -200,17 +198,21 @@ public class SetGameActivity extends Activity implements TextWatcher {
      * @return kindPlayer Retourne le type de partie
      */
     public String getKindGame(String typeDePartie) {
+
         String typePlayer = "Joueur";
+
         if (typeDePartie.equals("Solo")) {
             typePlayer = "Joueur";
+
         } else if (typeDePartie.equals("Equipe")) {
             typePlayer = "Equipe";
         }
+
         return typePlayer;
     }
 
     /**
-     * Création d'un nouvel EditText pour enregistré un nouveau joueur ou une nouvelle équipe
+     * Création d'un nouvel EditText pour enregistrer un nouveau joueur ou une nouvelle équipe
      *
      * @param v Bouton + 1 joueur
      */
@@ -358,15 +360,10 @@ public class SetGameActivity extends Activity implements TextWatcher {
         }
 
         //Création de la partie : nombre de joueurs, liste de joueurs, type de partie
-        game = new Game(listPlayers.size(), listPlayers, kindPlayer);
+        GameFactory.getGameServiceImpl().setNewGame(listPlayers.size(), listPlayers, kindPlayer);
 
-        //Objet Game transformé en Json
-        String gameToString = Game.gameToJson(game);
-
-        //Envoi du game json à GameActivity
         //Lancement partie
         Intent intent = new Intent(SetGameActivity.this, GameActivity.class);
-        intent.putExtra("game", gameToString);
         startActivity(intent);
         finish();
     }
