@@ -8,6 +8,7 @@ package com.devtoweb;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -16,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import com.devtoweb.R;
 import java.util.Random;
 
 /**
@@ -42,6 +42,7 @@ public class ViewsMaker extends Activity {
     public static Button newButton(Context context, String text, int width, int height, float weight, boolean idOrNot, boolean relOrLinear, int rule1, int rule2) {
 
         Button button;
+        int marginTopBottomBtns = getDpFromPixel(context, 5);
 
         /**
          * Génération d'un id "unique" (Integer)
@@ -69,7 +70,7 @@ public class ViewsMaker extends Activity {
                 sizeButton.addRule(rule1);
             }
 
-            sizeButton.setMargins(0, 5, 0, 5);
+            sizeButton.setMargins(0, marginTopBottomBtns, 0, marginTopBottomBtns);
 
             /**
              * Création du bouton
@@ -87,7 +88,7 @@ public class ViewsMaker extends Activity {
              * Largeur, Hauteur, Poids et marges du bouton
              */
             LinearLayout.LayoutParams sizeButton = new LinearLayout.LayoutParams(width, height, weight);
-            sizeButton.setMargins(0, 5, 0, 5);
+            sizeButton.setMargins(0, marginTopBottomBtns, 0, marginTopBottomBtns);
 
             /**
              * Création du bouton
@@ -126,34 +127,33 @@ public class ViewsMaker extends Activity {
         r.nextInt();
         int etId = r.nextInt(100000);
 
+        int marginTopBottomEdTxt = getDpFromPixel(context, 7);
+
         //Taille de l'edittext
         LinearLayout.LayoutParams sizeEditText = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        sizeEditText.setMargins(0, 5, 0, 5);
+        sizeEditText.setMargins(0, marginTopBottomEdTxt, 0, marginTopBottomEdTxt);
 
         /**
          * Hauteur des EditText | Récupération de la taille en DP transformée en PX | height = 60dp
          */
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        float dp = 60f;
-        float fpixels = metrics.density * dp;
-        int pixels = (int) (fpixels + 0.5f);
+        int heightEdTxt = getDpFromPixel(context, 50);
 
         //Création de l'edittext
         editText = new EditText(context);
         editText.setLayoutParams(sizeEditText);
         editText.setPadding(0, 10, 0, 10);
-        editText.setHeight(pixels);
         editText.setId(etId);
         editText.setTextColor(Color.BLACK);
         editText.setBackgroundColor(Color.WHITE);
         editText.setHint(hint);
         editText.setHintTextColor(Color.BLACK);
+        editText.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        editText.setHeight(heightEdTxt);
 
         //Gestion d'un drawable
         if (drawableOrNot) {
 
             editText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.poubelle, 0);
-
         }
 
         return editText;
@@ -195,5 +195,16 @@ public class ViewsMaker extends Activity {
         keel.setOnClickListener(listener);
 
         return keel;
+    }
+
+    public static int getDpFromPixel(Context context, int dptoUse) {
+
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+
+        float dp = Float.parseFloat(dptoUse + "f");
+        float fpixels = metrics.density * dp;
+        int pixels = (int) (fpixels + 0.5f);
+
+        return pixels;
     }
 }

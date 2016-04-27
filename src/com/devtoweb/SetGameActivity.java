@@ -53,10 +53,12 @@ public class SetGameActivity extends Activity implements TextWatcher {
         scrollCtn.setFillViewport(true);
         setContentView(scrollCtn);
 
+        int paddingGeneralWrapper = ViewsMaker.getDpFromPixel(this, 20);
+
         generalWrapper = new LinearLayout(this);
         generalWrapper.setLayoutParams(rlMatchParent);
         generalWrapper.setOrientation(LinearLayout.VERTICAL);
-        generalWrapper.setPadding(20, 20, 20, 20);
+        generalWrapper.setPadding(paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper);
         generalWrapper.setBackgroundResource(R.drawable.background);
         scrollCtn.addView(generalWrapper);
 

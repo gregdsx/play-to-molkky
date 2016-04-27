@@ -63,10 +63,12 @@ public class GameActivity extends Activity {
         super.onCreate(icicle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        int paddingGeneralWrapper = ViewsMaker.getDpFromPixel(this, 20);
+
         generalWrapper = new RelativeLayout(this);
         generalWrapper.setLayoutParams(lpMatchParent);
         generalWrapper.setBackgroundResource(R.drawable.background);
-        generalWrapper.setPadding(20, 20, 20, 20);
+        generalWrapper.setPadding(paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper);
 
         setContentView(generalWrapper);
 
@@ -82,7 +84,8 @@ public class GameActivity extends Activity {
         generalWrapper.addView(headerWrapper);
 
         LinearLayout.LayoutParams sizeNamePlayer = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 1.5);
-        sizeNamePlayer.setMargins(20, 0, 10, 0);
+        int marginLeftRightNamePlayer = ViewsMaker.getDpFromPixel(this, 10);
+        sizeNamePlayer.setMargins(marginLeftRightNamePlayer, 0, marginLeftRightNamePlayer, 0);
 
         //Nom du joueur en cours + affichage de son nombre de croix via le drawable
         displayNamePlayer = new TextView(this);
@@ -131,7 +134,8 @@ public class GameActivity extends Activity {
 
         RelativeLayout.LayoutParams sizeMolkkyWrapper = new RelativeLayout.LayoutParams(wrapperMolkky.getBackground().getMinimumWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
         sizeMolkkyWrapper.addRule(RelativeLayout.CENTER_IN_PARENT);
-        sizeMolkkyWrapper.setMargins(0, 0, 0, 10);
+        int marginBottomMolkky = ViewsMaker.getDpFromPixel(this, 10);
+        sizeMolkkyWrapper.setMargins(0, 0, 0, marginBottomMolkky);
 
         generalWrapper.addView(wrapperMolkky, sizeMolkkyWrapper);
 
@@ -222,7 +226,9 @@ public class GameActivity extends Activity {
 
         RelativeLayout.LayoutParams sizeScorePlayer = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         sizeScorePlayer.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        sizeScorePlayer.setMargins(10, 5, 10, 5);
+        int marginLeftRightScorePlayer = ViewsMaker.getDpFromPixel(this, 10);
+        int marginTopBottomScorePlayer = ViewsMaker.getDpFromPixel(this, 5);
+        sizeScorePlayer.setMargins(marginLeftRightScorePlayer, marginTopBottomScorePlayer, marginLeftRightScorePlayer, marginTopBottomScorePlayer);
 
         displayScorePlayer = new TextView(this);
         displayScorePlayer.setText("0");
@@ -580,11 +586,12 @@ public class GameActivity extends Activity {
             divider.setBackgroundColor(Color.TRANSPARENT);
         }
 
-        LinearLayout.LayoutParams lpPopupWrapper = new LinearLayout.LayoutParams(generalWrapper.getWidth(), generalWrapper.getHeight());
-
         ScrollView scroll = new ScrollView(this);
         scroll.setFillViewport(true);
         popup.setContentView(scroll);
+
+        LinearLayout.LayoutParams lpPopupWrapper = new LinearLayout.LayoutParams(generalWrapper.getWidth() - generalWrapper.getPaddingLeft() * 2, generalWrapper.getHeight());
+        lpPopupWrapper.leftMargin = generalWrapper.getPaddingLeft();
 
         //Conteneur du popup
         LinearLayout popupWrapper = new LinearLayout(popup.getContext());
@@ -597,7 +604,8 @@ public class GameActivity extends Activity {
         LinearLayout.LayoutParams lpTxtViewWrapper = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         //Taille des champs nom croix et score dans header et joueurs
         LinearLayout.LayoutParams lpTxtView = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.3);
-        lpTxtView.setMargins(0, 2, 0, 2);
+        int marginTopBottomTxtView = ViewsMaker.getDpFromPixel(this, 2);
+        lpTxtView.setMargins(0, marginTopBottomTxtView, 0, marginTopBottomTxtView);
 
         //Header (entete pour nom, croix et score)
         LinearLayout headerWrapper = new LinearLayout(popup.getContext());

@@ -27,17 +27,20 @@ public class ChoiceActivity extends Activity {
         super.onCreate(icicle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        int paddingGeneralWrapper = ViewsMaker.getDpFromPixel(this, 20);
+
         generalWrapper = new LinearLayout(this);
         generalWrapper.setOrientation(LinearLayout.VERTICAL);
         generalWrapper.setLayoutParams(lpMatchParent);
         generalWrapper.setBackgroundResource(R.drawable.background);
         generalWrapper.setGravity(Gravity.CENTER_HORIZONTAL);
-        generalWrapper.setPadding(20, 20, 20, 20);
+        generalWrapper.setPadding(paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper);
 
         setContentView(generalWrapper);
 
         LinearLayout.LayoutParams lpLogo = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lpLogo.setMargins(0, 0, 0, 30);
+        int marginBottomLogo = ViewsMaker.getDpFromPixel(this, 30);
+        lpLogo.setMargins(0, 0, 0, marginBottomLogo);
 
         ImageView logo = new ImageView(this);
         logo.setLayoutParams(lpLogo);

@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import com.devtoweb.R;
 import java.util.ArrayList;
 
 /**
@@ -37,12 +36,14 @@ public class InstructionActivity extends FragmentActivity {
         super.onCreate(icicle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        int paddingGeneralWrapper = ViewsMaker.getDpFromPixel(this, 20);
+
         generalWrapper = new LinearLayout(this);
         generalWrapper.setOrientation(LinearLayout.VERTICAL);
         generalWrapper.setLayoutParams(lpMatchParent);
         generalWrapper.setBackgroundResource(R.drawable.background);
         generalWrapper.setGravity(Gravity.CENTER_HORIZONTAL);
-        generalWrapper.setPadding(20, 20, 20, 20);
+        generalWrapper.setPadding(paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper);
 
         //Définition de la vue à travers generalWrapper
         setContentView(generalWrapper);
@@ -130,7 +131,9 @@ public class InstructionActivity extends FragmentActivity {
             LinearLayout rule1wrapper = new LinearLayout(getContext());
             rule1wrapper.setLayoutParams(lpMatchParent);
             rule1wrapper.setGravity(Gravity.CENTER);
-            rule1wrapper.setPadding(5, 20, 5, 0);
+            int paddingLeftRightRule1 = ViewsMaker.getDpFromPixel(getContext(), 5);
+            int paddingTopRule1 = ViewsMaker.getDpFromPixel(getContext(), 20);
+            rule1wrapper.setPadding(paddingLeftRightRule1, paddingTopRule1, paddingLeftRightRule1, 0);
             scroll.addView(rule1wrapper);
 
             TextView rule1 = new TextView(getContext());
@@ -162,7 +165,9 @@ public class InstructionActivity extends FragmentActivity {
             rule2wrapper.setLayoutParams(lpMatchParent);
             rule2wrapper.setGravity(Gravity.CENTER);
             rule2wrapper.setOrientation(LinearLayout.VERTICAL);
-            rule2wrapper.setPadding(5, 20, 5, 0);
+            int paddingLeftRightRule2 = ViewsMaker.getDpFromPixel(getContext(), 5);
+            int paddingTopRule2 = ViewsMaker.getDpFromPixel(getContext(), 20);
+            rule2wrapper.setPadding(paddingLeftRightRule2, paddingTopRule2, paddingLeftRightRule2, 0);
             scroll.addView(rule2wrapper);
 
             TextView rule2 = new TextView(getContext());
@@ -174,7 +179,8 @@ public class InstructionActivity extends FragmentActivity {
             ImageView bowling = new ImageView(getContext());
             bowling.setLayoutParams(lpWrapContent);
             bowling.setBackgroundResource(R.drawable.molkky_dispo);
-            bowling.setPadding(0, 20, 0, 20);
+            int paddingTopBottomImg = ViewsMaker.getDpFromPixel(getContext(), 20);
+            bowling.setPadding(0, paddingTopBottomImg, 0, paddingTopBottomImg);
             rule2wrapper.addView(bowling);
             
             TextView points = new TextView(getContext());
@@ -205,7 +211,9 @@ public class InstructionActivity extends FragmentActivity {
             rule3wrapper.setLayoutParams(lpMatchParent);
             rule3wrapper.setGravity(Gravity.CENTER);
             rule3wrapper.setOrientation(LinearLayout.VERTICAL);
-            rule3wrapper.setPadding(5, 20, 5, 0);
+            int paddingLeftRightRule3 = ViewsMaker.getDpFromPixel(getContext(), 5);
+            int paddingTopRule3 = ViewsMaker.getDpFromPixel(getContext(), 20);
+            rule3wrapper.setPadding(paddingLeftRightRule3, paddingTopRule3, paddingLeftRightRule3, 0);
             scroll.addView(rule3wrapper);
 
             TextView newRule = new TextView(getContext());

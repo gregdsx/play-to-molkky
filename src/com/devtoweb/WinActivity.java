@@ -48,10 +48,12 @@ public class WinActivity extends Activity {
         scroll.setFillViewport(true);
         setContentView(scroll);
 
+        int paddingGeneralWrapper = ViewsMaker.getDpFromPixel(this, 20);
+
         generalWrapper = new RelativeLayout(this);
         generalWrapper.setLayoutParams(lpMatchParent);
         generalWrapper.setBackgroundResource(R.drawable.background);
-        generalWrapper.setPadding(20, 20, 20, 20);
+        generalWrapper.setPadding(paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper);
         scroll.addView(generalWrapper);
 
         /**
@@ -65,7 +67,8 @@ public class WinActivity extends Activity {
         generalWrapper.addView(logoWrapper);
 
         LinearLayout.LayoutParams lpLogo = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lpLogo.setMargins(0, 0, 0, 10);
+        int marginBottomLogo = ViewsMaker.getDpFromPixel(this, 10);
+        lpLogo.setMargins(0, 0, 0, marginBottomLogo);
 
         ImageView logo = new ImageView(this);
         logo.setLayoutParams(lpLogo);
@@ -76,7 +79,10 @@ public class WinActivity extends Activity {
          * Conteneur du tableau des scores
          */
         RelativeLayout.LayoutParams sizeScoreWrapper = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        sizeScoreWrapper.setMargins(20, 5, 20, 15);
+        int marginLeftRightScoreWrapper = ViewsMaker.getDpFromPixel(this, 20);
+        int marginTopScoreWrapper = ViewsMaker.getDpFromPixel(this, 5);
+        int marginBottomScoreWrapper = ViewsMaker.getDpFromPixel(this, 15);
+        sizeScoreWrapper.setMargins(marginLeftRightScoreWrapper, marginTopScoreWrapper, marginLeftRightScoreWrapper, marginBottomScoreWrapper);
         sizeScoreWrapper.addRule(RelativeLayout.BELOW, logoWrapper.getId());
 
         scoreWrapper = new LinearLayout(this);
@@ -247,7 +253,8 @@ public class WinActivity extends Activity {
 
         //Taille des champs nom croix et score dans tableau score
         LinearLayout.LayoutParams lpTxtView = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.3);
-        lpTxtView.setMargins(0, 2, 0, 2);
+        int marginTopBottomTxtView = ViewsMaker.getDpFromPixel(this, 2);
+        lpTxtView.setMargins(0, marginTopBottomTxtView, 0, marginTopBottomTxtView);
 
         //Ajout d'un textview pour chaque joueurs en cours
         for (int i = 0; i < listJoueurs.size(); i++) {
