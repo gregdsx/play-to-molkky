@@ -8,9 +8,11 @@ package com.devtoweb;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -43,7 +45,7 @@ public class ViewsMaker extends Activity {
 
         Button button;
         int marginTopBottomBtns = getDpFromPixel(context, 5);
-
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "segoescb.ttf");
         /**
          * Génération d'un id "unique" (Integer)
          */
@@ -104,6 +106,7 @@ public class ViewsMaker extends Activity {
         button.setTextColor(Color.BLACK);
         button.setBackgroundResource(R.drawable.bouton);
         button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        button.setTypeface(typeface);
 
         return button;
     }
@@ -119,6 +122,7 @@ public class ViewsMaker extends Activity {
     public static EditText newEditText(Context context, String hint, boolean drawableOrNot) {
 
         EditText editText;
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "segoesc.ttf");
 
         /**
          * Génération d'un id "unique" (Integer)
@@ -149,6 +153,8 @@ public class ViewsMaker extends Activity {
         editText.setHintTextColor(Color.BLACK);
         editText.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         editText.setHeight(heightEdTxt);
+        editText.setTypeface(typeface);
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 
         //Gestion d'un drawable
         if (drawableOrNot) {
@@ -172,11 +178,16 @@ public class ViewsMaker extends Activity {
      */
     public static Button newKeel(Context context, String text, int id, View.OnClickListener listener, int rule1, int rule2) {
 
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "snaket.ttf");
+
         Button keel = new Button(context);
         keel.setId(id);
         keel.setText(text);
-        keel.setTextSize(20);
-        keel.setTextColor(Color.BLACK);
+        keel.setGravity(Gravity.CENTER);
+        keel.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        keel.setTextColor(Color.argb(255, 51, 204, 51));
+        keel.setTypeface(typeface);
+        keel.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
         keel.setBackgroundResource(R.drawable.quille);
 
         RelativeLayout.LayoutParams sizeKeel = new RelativeLayout.LayoutParams(keel.getBackground().getMinimumWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -206,5 +217,45 @@ public class ViewsMaker extends Activity {
         int pixels = (int) (fpixels + 0.5f);
 
         return pixels;
+    }
+
+    public static int getFontSizeWithScreenDensity(Context context) {
+
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        float density = metrics.density;
+
+        System.out.println(density);
+
+        int sizeFontInPixel;
+        
+        if (density == 1.0) {
+
+            sizeFontInPixel = 10;
+
+        } else if (density == .75) {
+
+            sizeFontInPixel = 10;
+
+        } else if (density == 1.5) {
+
+            sizeFontInPixel = 13;
+
+        } else if (density == 2.0) {
+
+            sizeFontInPixel = 20;
+
+        } else if (density == 3.0) {
+
+            sizeFontInPixel = 23;
+
+        } else if (density == 4.0) {
+
+            sizeFontInPixel = 26;
+
+        } else {
+
+            sizeFontInPixel = 16;
+        }
+        return sizeFontInPixel;
     }
 }

@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,11 +44,16 @@ public class GameActivity extends Activity {
 
             if (v.isSelected()) {
 
-                v.setBackgroundResource(R.drawable.quille);
+                Button keel = (Button) v;
+                keel.setBackgroundResource(R.drawable.quille);
+                keel.setTextColor(Color.argb(255, 51, 204, 51));
+
 
             } else {
 
-                v.setBackgroundResource(R.drawable.quille_touched);
+                Button keel = (Button) v;
+                keel.setBackgroundResource(R.drawable.quille_touched);
+                keel.setTextColor(Color.argb(255, 255, 255, 255));
             }
 
             getCurrentScore(v.getId(), v);
@@ -91,13 +98,15 @@ public class GameActivity extends Activity {
         displayNamePlayer = new TextView(this);
         displayNamePlayer.setLayoutParams(sizeNamePlayer);
         displayNamePlayer.setTextColor(Color.BLACK);
-        displayNamePlayer.setTextSize(25);
+        displayNamePlayer.setTextSize(28);
         displayNamePlayer.setGravity(Gravity.LEFT);
         displayNamePlayer.setText(getPlayerFocus().getName());
+        displayNamePlayer.setTypeface(Typeface.createFromAsset(this.getAssets(), "fonts/" + "segoescb.ttf"));
         headerWrapper.addView(displayNamePlayer);
 
         //Affichage du score
         Button allScore = ViewsMaker.newButton(this, "Scores", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5, true, false, 9999, 9999);
+        allScore.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         allScore.setOnTouchListener(new View.OnTouchListener() {
 
             public boolean onTouch(View v, MotionEvent event) {
@@ -233,7 +242,9 @@ public class GameActivity extends Activity {
         displayScorePlayer = new TextView(this);
         displayScorePlayer.setText("0");
         displayScorePlayer.setGravity(Gravity.CENTER);
-        displayScorePlayer.setTextSize(20);
+        displayScorePlayer.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        displayScorePlayer.setTypeface(Typeface.createFromAsset(this.getAssets(), "fonts/" + "snaket.ttf"));
+        displayScorePlayer.setTextColor(Color.argb(255, 255, 255, 255));
         displayScorePlayer.setBackgroundResource(R.drawable.quille_touched);
         displayScorePlayer.setLayoutParams(sizeScorePlayer);
         displayScorePlayer.setId(new Random().nextInt(100000));
@@ -241,6 +252,8 @@ public class GameActivity extends Activity {
 
         backPlayer = ViewsMaker.newButton(this, " < ", displayScorePlayer.getBackground().getMinimumWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, 0, true, true, RelativeLayout.LEFT_OF, displayScorePlayer.getId());
         backPlayer.setBackgroundResource(R.drawable.quille_touched);
+        backPlayer.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 24);
+        backPlayer.setTextColor(Color.argb(255, 255, 255, 255));
         backPlayer.setVisibility(View.INVISIBLE);
         backPlayer.setOnTouchListener(new View.OnTouchListener() {
 
@@ -267,8 +280,9 @@ public class GameActivity extends Activity {
         });
         footerWrapper.addView(backPlayer);
 
-        Button setScorePlayer = ViewsMaker.newButton(this, "Ok", displayScorePlayer.getBackground().getMinimumWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, 0, true, true, RelativeLayout.RIGHT_OF, displayScorePlayer.getId());
+        Button setScorePlayer = ViewsMaker.newButton(this, "OK", displayScorePlayer.getBackground().getMinimumWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, 0, true, true, RelativeLayout.RIGHT_OF, displayScorePlayer.getId());
         setScorePlayer.setBackgroundResource(R.drawable.quille_touched);
+        setScorePlayer.setTextColor(Color.argb(255, 255, 255, 255));
         setScorePlayer.setGravity(Gravity.CENTER);
         setScorePlayer.setOnTouchListener(new View.OnTouchListener() {
 
@@ -541,6 +555,7 @@ public class GameActivity extends Activity {
                     quille = (Button) rl.getChildAt(j);
                     quille.setSelected(false);
                     quille.setBackgroundResource(R.drawable.quille);
+                    quille.setTextColor(Color.argb(255, 51, 204, 51));
                 }
             }
         }

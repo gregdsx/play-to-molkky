@@ -238,7 +238,7 @@ public class InstructionActivity extends FragmentActivity {
     }
 
     /**
-     * Quatrieme règle (fragment) Règle pour la prochaine version de play to molkky
+     * Quatrieme règle (fragment) Fonctionnement application
      */
     public static class FourthSlide extends Fragment {
 
@@ -280,52 +280,13 @@ public class InstructionActivity extends FragmentActivity {
 
             TextView rule42 = new TextView(getContext());
             rule42.setText("- L'ordre de jeu de la première partie dépend de l'ordre des noms des joueurs enregistrés \n"
-                    + "\n" + "- Pour marquer les points des joueurs, sélectionnez les quilles tombées lors du lancé du joueur (ou sélectionnez uniquement la quille corresondante au score) et appuyez sur OK pour valider le score du joueur.\n"
-                    + "\n" + "- Le lancé précédent peut être annulé si une erreur a été commise lors de l'enregistrement du score précédent. Attention vous ne pouvez effectué qu'un seul retour à la fois (vous ne pouvez revenir qu'au joueur précédent le joueur actuel).\n"
-                    + "\n" + "- Quand la partie se termine, un classement est effectué du premier au dernier puis les éliminés. Si vous recommencez une partie, cet ordre sera utilisé pour favoriser les perdants de la manche précédente.\n"
+                    + "\n" + "- Pour marquer les points des joueurs, sélectionnez les quilles tombées lors du lancé du joueur (ou sélectionnez uniquement la quille corresondante au score) et appuyez sur OK pour valider le score du joueur\n"
+                    + "\n" + "- Le lancé précédent peut être annulé si une erreur a été commise lors de l'enregistrement du score précédent. Attention vous ne pouvez effectué qu'un seul retour à la fois (vous ne pouvez revenir qu'au joueur précédent le joueur actuel)\n"
+                    + "\n" + "- Quand la partie se termine, un classement est effectué du premier au dernier puis les éliminés. Si vous recommencez une partie, cet ordre sera utilisé pour favoriser les perdants de la manche précédente\n"
             );
             rule42.setTextColor(Color.BLACK);
             rule42.setTextSize(14);
             rule4wrapper.addView(rule42);
-
-            return scroll;
-        }
-
-    }
-    /**
-     * Cinquieme règle (fragment)
-     */
-    public static class FifthSlide extends Fragment {
-
-        private final LinearLayout.LayoutParams lpMatchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-        @Override
-        public View onCreateView(LayoutInflater li, ViewGroup vg, Bundle bundle) {
-
-            ScrollView scroll = new ScrollView(getContext());
-
-            LinearLayout rule3wrapper = new LinearLayout(getContext());
-            rule3wrapper.setLayoutParams(lpMatchParent);
-            rule3wrapper.setGravity(Gravity.CENTER);
-            rule3wrapper.setOrientation(LinearLayout.VERTICAL);
-            rule3wrapper.setPadding(5, 20, 5, 0);
-            scroll.addView(rule3wrapper);
-
-            TextView newRule = new TextView(getContext());
-            newRule.setText("Comment utiliser Play to Mölkky :" + "\n");
-            newRule.setTextSize(16);
-            newRule.setTextColor(Color.BLACK);
-            rule3wrapper.addView(newRule);
-
-            TextView rule3 = new TextView(getContext());
-            rule3.setText("- Une quille n’est considérée comme abattue que si elle est tombée entièrement sur le sol et ne repose sur aucune autre \n"
-                    + "\n" + "- Si un joueur manque un lancer, il ne marque donc pas de points et obtient une croix. Si le joueur manque trois lancers consécutifs, il obtient 3 croix et est éliminé de la partie. \n"
-                    + "Un lancer réussi remet les croix à zéro (maximum 2 croix)\n" + "\n"
-                    + "- Si un joueur dépasse 50 points, il retombe immédiatement à 25 points \n" + "\n"
-                    + "- Le Mölkky (lanceur) doit être lancé d'un geste du bas vers le haut, comme au bowling. Le Mölkky peut rebondir sur le sol ou toucher directement les quilles");
-            rule3.setTextColor(Color.BLACK);
-            rule3.setTextSize(14);
-            rule3wrapper.addView(rule3);
 
             return scroll;
         }
