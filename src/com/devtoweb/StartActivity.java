@@ -52,7 +52,7 @@ public class StartActivity extends Activity {
         logo.setBackgroundResource(R.drawable.logo);
         generalWrapper.addView(logo);
 
-        newGame = ViewsMaker.newButton(this, "New Game", ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0, false, false, 9999, 9999);
+        newGame = ViewsMaker.newButton(this, "Play", ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0, false, false, 9999, 9999);
         newGame.setOnTouchListener(new View.OnTouchListener() {
 
             public boolean onTouch(View v, MotionEvent event) {
@@ -71,7 +71,8 @@ public class StartActivity extends Activity {
         newGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent intent = new Intent(StartActivity.this, ChoiceActivity.class);
+                Intent intent = new Intent(StartActivity.this, SetGameActivity.class);
+                intent.putExtra("typeDePartie", "Solo");
                 startActivity(intent);
                 finish();
             }

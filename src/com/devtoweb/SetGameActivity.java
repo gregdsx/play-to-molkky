@@ -171,7 +171,7 @@ public class SetGameActivity extends Activity implements TextWatcher {
 
             public void onClick(View v) {
 
-                Intent intent = new Intent(SetGameActivity.this, ChoiceActivity.class);
+                Intent intent = new Intent(SetGameActivity.this, StartActivity.class);
                 startActivity(intent);
                 finish();
             }

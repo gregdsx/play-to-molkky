@@ -73,7 +73,7 @@ public class InstructionActivity extends FragmentActivity {
         slides.add(Fragment.instantiate(this, FirstSlide.class.getName()));
         slides.add(Fragment.instantiate(this, SecondSlide.class.getName()));
         slides.add(Fragment.instantiate(this, ThirdSlide.class.getName()));
-//        slides.add(Fragment.instantiate(this, FourthSlide.class.getName()));
+        slides.add(Fragment.instantiate(this, FourthSlide.class.getName()));
 
         //Ajout des fragments à l'adaptateur qui permet la navigation (pages)
         pageAdapter = new MyPagerAdapter(super.getSupportFragmentManager(), slides);
@@ -240,37 +240,58 @@ public class InstructionActivity extends FragmentActivity {
     /**
      * Quatrieme règle (fragment) Règle pour la prochaine version de play to molkky
      */
-//    public static class FourthSlide extends Fragment {
-//
-//        private final LinearLayout.LayoutParams lpMatchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//
-//        @Override
-//        public View onCreateView(LayoutInflater li, ViewGroup vg, Bundle bundle) {
-//
-//            LinearLayout rule4wrapper = new LinearLayout(getContext());
-//            rule4wrapper.setLayoutParams(lpMatchParent);
-//            rule4wrapper.setGravity(Gravity.CENTER);
-//            rule4wrapper.setOrientation(LinearLayout.VERTICAL);
-//            rule4wrapper.setPadding(5, 20, 5, 0);
-//
-//            TextView teamRule = new TextView(getContext());
-//            teamRule.setText("Régles en équipe :" + "\n");
-//            teamRule.setTextSize(16);
-//            teamRule.setTextColor(Color.BLACK);
-//            rule4wrapper.addView(teamRule);
-//
-//            TextView rule4 = new TextView(getContext());
-//            rule4.setText("- Les joueurs des équipes jouent tour à tour \n"
-//                    + "\n" + "- Si une équipe égalise le score d'une autre équipe, l'équipe qui s'est faite égalisé retombe à zéro, ou à 25 si son score était supérieur \n"
-//                    + "\n" + "- Si une équipe manque 3 lancers consécutif, elle redescend à 0, ou à 25 si son score était supérieur");
-//            rule4.setTextColor(Color.BLACK);
-//            rule4.setTextSize(14);
-//            rule4wrapper.addView(rule4);
-//
-//            return rule4wrapper;
-//        }
-//
-//    }
+    public static class FourthSlide extends Fragment {
+
+        private final LinearLayout.LayoutParams lpMatchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        @Override
+        public View onCreateView(LayoutInflater li, ViewGroup vg, Bundle bundle) {
+
+            ScrollView scroll = new ScrollView(getContext());
+
+            LinearLayout rule4wrapper = new LinearLayout(getContext());
+            rule4wrapper.setLayoutParams(lpMatchParent);
+            rule4wrapper.setGravity(Gravity.CENTER);
+            rule4wrapper.setOrientation(LinearLayout.VERTICAL);
+            int paddingLeftRightRule4 = ViewsMaker.getDpFromPixel(getContext(), 5);
+            int paddingTopRule4 = ViewsMaker.getDpFromPixel(getContext(), 20);
+            rule4wrapper.setPadding(paddingLeftRightRule4, paddingTopRule4, paddingLeftRightRule4, 0);
+            scroll.addView(rule4wrapper);
+
+            TextView titleRule = new TextView(getContext());
+            titleRule.setText("Comment utiliser Play To Mölkky ? :" + "\n");
+            titleRule.setTextSize(16);
+            titleRule.setTextColor(Color.BLACK);
+            rule4wrapper.addView(titleRule);
+
+            TextView rule4 = new TextView(getContext());
+            rule4.setText("Play To Mölkky est un compte score pour le jeu Mölkky. Vous l'utiliserez tout au long de vos parties de Mölkky "
+                    + "pour vous rappeler l'ordre de jeu, les points et le nombre de croix de chaque joueurs. Mais également à savoir "
+                    + "qui est éliminé et qui gagne la partie ! \n");
+            rule4.setTextColor(Color.BLACK);
+            rule4.setTextSize(14);
+            rule4wrapper.addView(rule4);
+
+            TextView titleRule2 = new TextView(getContext());
+            titleRule2.setText("Fonctionnement général :" + "\n");
+            titleRule2.setTextSize(16);
+            titleRule2.setTextColor(Color.BLACK);
+            rule4wrapper.addView(titleRule2);
+
+            TextView rule42 = new TextView(getContext());
+            rule42.setText("- L'ordre de jeu de la première partie dépend de l'ordre des noms des joueurs enregistrés \n"
+                    + "\n" + "- Pour marquer les points des joueurs, sélectionnez les quilles tombées lors du lancé du joueur (ou sélectionnez uniquement la quille corresondante au score) et appuyez sur OK pour valider le score du joueur.\n"
+                    + "\n" + "- Le lancé précédent peut être annulé si une erreur a été commise lors de l'enregistrement du score précédent. Attention vous ne pouvez effectué qu'un seul retour à la fois (vous ne pouvez revenir qu'au joueur précédent le joueur actuel).\n"
+                    + "\n" + "- Quand la partie se termine, un classement est effectué du premier au dernier puis les éliminés. Si vous recommencez une partie, cet ordre sera utilisé pour favoriser les perdants de la manche précédente.\n"
+            );
+            rule42.setTextColor(Color.BLACK);
+            rule42.setTextSize(14);
+            rule4wrapper.addView(rule42);
+
+            return scroll;
+        }
+
+    }
     /**
      * Cinquieme règle (fragment)
      */
