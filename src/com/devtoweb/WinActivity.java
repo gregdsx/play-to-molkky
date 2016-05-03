@@ -109,7 +109,7 @@ public class WinActivity extends Activity {
         generalWrapper.addView(btnWrapper);
 
         //Recommencer la partie
-        Button back = ViewsMaker.newButton(this, "Recommencer", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 1, false, false, 9999, 9999);
+        Button back = ViewsMaker.newButton(this, "Play", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 1, false, false, 9999, 9999);
         back.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {

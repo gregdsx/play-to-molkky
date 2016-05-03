@@ -105,7 +105,7 @@ public class ViewsMaker extends Activity {
 
         button.setTextColor(Color.BLACK);
         button.setBackgroundResource(R.drawable.bouton);
-        button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        button.setTextSize(TypedValue.COMPLEX_UNIT_SP, getFontSizeWithScreenWidth(context));
         button.setTypeface(typeface);
 
         return button;
@@ -154,7 +154,7 @@ public class ViewsMaker extends Activity {
         editText.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         editText.setHeight(heightEdTxt);
         editText.setTypeface(typeface);
-        editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, getFontSizeWithScreenWidth(context));
 
         //Gestion d'un drawable
         if (drawableOrNot) {
@@ -184,7 +184,7 @@ public class ViewsMaker extends Activity {
         keel.setId(id);
         keel.setText(text);
         keel.setGravity(Gravity.CENTER);
-        keel.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        keel.setTextSize(TypedValue.COMPLEX_UNIT_DIP, getFontSizeWithScreenWidth(context));
         keel.setTextColor(Color.argb(255, 51, 204, 51));
         keel.setTypeface(typeface);
         keel.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
@@ -219,43 +219,50 @@ public class ViewsMaker extends Activity {
         return pixels;
     }
 
-    public static int getFontSizeWithScreenDensity(Context context) {
+    public static int getFontSizeWithScreenWidth(Context context) {
 
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
         float density = metrics.density;
 
-        System.out.println(density);
+        System.out.println(width);
 
         int sizeFontInPixel;
-        
-        if (density == 1.0) {
 
-            sizeFontInPixel = 10;
+        //Ldpi et mdpi 
+        if (width < 321) {
 
-        } else if (density == .75) {
+            sizeFontInPixel = 14;
 
-            sizeFontInPixel = 10;
+            //large ldpi et mdpi, hdpi
+        } else if (width < 481 && width > 321) {
 
-        } else if (density == 1.5) {
+            sizeFontInPixel = 18;
 
-            sizeFontInPixel = 13;
+            //Si ldpi agrandissement
+            if (density == 0.75) {
 
-        } else if (density == 2.0) {
+                sizeFontInPixel = 21;
+            }
+
+            //Extra large ldpi et hdpi
+        } else if (width < 641 && width > 481) {
 
             sizeFontInPixel = 20;
 
-        } else if (density == 3.0) {
+            //Si ldpi agrandissement
+            if (density == 0.75) {
 
-            sizeFontInPixel = 23;
-
-        } else if (density == 4.0) {
-
-            sizeFontInPixel = 26;
+                sizeFontInPixel = 23;
+            }
 
         } else {
 
-            sizeFontInPixel = 16;
+            sizeFontInPixel = 22;
         }
+
+        System.out.println(sizeFontInPixel);
+
         return sizeFontInPixel;
     }
 }

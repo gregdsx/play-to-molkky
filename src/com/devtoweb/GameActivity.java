@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -56,6 +57,17 @@ public class GameActivity extends Activity {
                 keel.setTextColor(Color.argb(255, 255, 255, 255));
             }
 
+            //TEST
+            DisplayMetrics dis = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(dis);
+
+            System.out.println("taille restante = taille complete : " + dis.widthPixels + " - padding : " + generalWrapper.getPaddingLeft() + " x 2");
+
+            System.out.println("taille quille : " + v.getHeight() + " " + v.getWidth());
+            System.out.println("taille molkky : " + wrapperMolkky.getWidth());
+            System.out.println("taille mini background : " + wrapperMolkky.getBackground().getMinimumWidth());
+            System.out.println("taille background displayscore : " + displayScorePlayer.getBackground().getMinimumHeight());
+            //FIN TEST
             getCurrentScore(v.getId(), v);
         }
     };
@@ -106,7 +118,7 @@ public class GameActivity extends Activity {
 
         //Affichage du score
         Button allScore = ViewsMaker.newButton(this, "Scores", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5, true, false, 9999, 9999);
-        allScore.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+//        allScore.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         allScore.setOnTouchListener(new View.OnTouchListener() {
 
             public boolean onTouch(View v, MotionEvent event) {
@@ -242,7 +254,7 @@ public class GameActivity extends Activity {
         displayScorePlayer = new TextView(this);
         displayScorePlayer.setText("0");
         displayScorePlayer.setGravity(Gravity.CENTER);
-        displayScorePlayer.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        displayScorePlayer.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         displayScorePlayer.setTypeface(Typeface.createFromAsset(this.getAssets(), "fonts/" + "snaket.ttf"));
         displayScorePlayer.setTextColor(Color.argb(255, 255, 255, 255));
         displayScorePlayer.setBackgroundResource(R.drawable.quille_touched);
