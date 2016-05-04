@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import java.util.Random;
 
 /**
@@ -106,6 +107,7 @@ public class ViewsMaker extends Activity {
         button.setTextColor(Color.BLACK);
         button.setBackgroundResource(R.drawable.bouton);
         button.setTextSize(TypedValue.COMPLEX_UNIT_SP, getFontSizeWithScreenWidth(context));
+        button.setGravity(Gravity.CENTER);
         button.setTypeface(typeface);
 
         return button;
@@ -208,6 +210,83 @@ public class ViewsMaker extends Activity {
         return keel;
     }
 
+    /**
+     * Création d'un nouveau TextView
+     *
+     * @param context Context du TextView
+     * @param text Texte à afficher
+     * @param textSize Taille du texte
+     * @param textColor Couleur du texte
+     * @param width Largeur du TextView
+     * @param height Hauteur du TextView
+     * @param weight Poids du TextView
+     * @param marginLeft Marge Gauche
+     * @param marginTop Marge Top
+     * @param marginRight Marge Droite
+     * @param marginBottom Marge Basse
+     * @param gravity Gravité du TextView
+     * @param idOrNot Si idOrNot true, création d'un id du TextView
+     * @param relOrNot Si le TextView est en position relative ou non
+     * @param rule1 Si relOrNot true, première règle de placement
+     * @param rule2 Seconde règle de placement
+     * @return Nouveau TextView
+     */
+    public static TextView newTextView(Context context, String text, int textSize, int textColor, int width, int height, float weight, int marginLeft, int marginTop, int marginRight, int marginBottom, int gravity, boolean idOrNot, boolean relOrNot, int rule1, int rule2) {
+
+        TextView textView;
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "segoesc.ttf");
+
+        Random r = new Random();
+        r.nextInt();
+        int id = r.nextInt(100000);
+
+        textView = new TextView(context);
+        textView.setText(text);
+        textView.setTextSize((float) textSize);
+        textView.setTextColor(textColor);
+        textView.setTypeface(typeface);
+        textView.setGravity(gravity);
+
+        if (idOrNot) {
+            textView.setId(id);
+        }
+
+        /**
+         * Si textview en position relative
+         */
+        if (relOrNot) {
+
+            /**
+             * Largeur, Hauteur et marges du bouton
+             */
+            RelativeLayout.LayoutParams sizeTxtView = new RelativeLayout.LayoutParams(width, height);
+            sizeTxtView.setMargins(getDpFromPixel(context, marginLeft), getDpFromPixel(context, marginTop), getDpFromPixel(context, marginRight), getDpFromPixel(context, marginBottom));
+
+            //2 regles de positions prédefinies
+            if (rule1 != 9999 && rule2 != 9999) {
+                sizeTxtView.addRule(rule1, rule2);
+
+                //1 regle de position prédéfinie
+            } else if (rule1 != 9999 && rule2 == 9999) {
+                sizeTxtView.addRule(rule1);
+            }
+
+            textView.setLayoutParams(sizeTxtView);
+
+        } else {
+
+            /**
+             * Largeur, Hauteur, Poids et marges du bouton
+             */
+            LinearLayout.LayoutParams sizeTxtView = new LinearLayout.LayoutParams(width, height, weight);
+            sizeTxtView.setMargins(getDpFromPixel(context, marginLeft), getDpFromPixel(context, marginTop), getDpFromPixel(context, marginRight), getDpFromPixel(context, marginBottom));
+
+            textView.setLayoutParams(sizeTxtView);
+        }
+
+        return textView;
+    }
+
     public static int getDpFromPixel(Context context, int dptoUse) {
 
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
@@ -224,8 +303,6 @@ public class ViewsMaker extends Activity {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         float density = metrics.density;
-
-        System.out.println(width);
 
         int sizeFontInPixel;
 
@@ -260,8 +337,6 @@ public class ViewsMaker extends Activity {
 
             sizeFontInPixel = 22;
         }
-
-        System.out.println(sizeFontInPixel);
 
         return sizeFontInPixel;
     }

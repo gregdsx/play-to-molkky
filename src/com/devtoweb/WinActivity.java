@@ -251,10 +251,8 @@ public class WinActivity extends Activity {
         border.setShape(GradientDrawable.LINE);
         border.setStroke(1, Color.WHITE);
 
-        //Taille des champs nom croix et score dans tableau score
-        LinearLayout.LayoutParams lpTxtView = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.3);
-        int marginTopBottomTxtView = ViewsMaker.getDpFromPixel(this, 2);
-        lpTxtView.setMargins(0, marginTopBottomTxtView, 0, marginTopBottomTxtView);
+        //Taille police pour tableau
+        int fontSize = ViewsMaker.getFontSizeWithScreenWidth(this) - 2;
 
         //Ajout d'un textview pour chaque joueurs en cours
         for (int i = 0; i < listJoueurs.size(); i++) {
@@ -267,24 +265,51 @@ public class WinActivity extends Activity {
             scoreWrapper.addView(playerWrapper);
 
             //Nom du joueur
-            TextView nameJoueur = new TextView(this);
-            nameJoueur.setLayoutParams(lpTxtView);
-            nameJoueur.setText(listJoueurs.get(i).getName());
-            nameJoueur.setTextColor(Color.WHITE);
-            nameJoueur.setGravity(Gravity.LEFT);
+            TextView nameJoueur = ViewsMaker.newTextView(this,
+                    listJoueurs.get(i).getName(),
+                    fontSize,
+                    Color.WHITE,
+                    0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    (float) 0.5,
+                    0,
+                    ViewsMaker.getDpFromPixel(this, 2),
+                    0,
+                    ViewsMaker.getDpFromPixel(this, 2),
+                    Gravity.LEFT,
+                    false,
+                    false,
+                    9999,
+                    9999);
             playerWrapper.addView(nameJoueur);
+
+            LinearLayout imgWrapper = new LinearLayout(this);
+            imgWrapper.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.25));
+            imgWrapper.setGravity(Gravity.CENTER);
+            playerWrapper.addView(imgWrapper);
 
             //Croix du joueur
             ImageView croixJoueur = new ImageView(this);
             croixJoueur.setBackground(displayNbrCroixPlayerFocus(listJoueurs.get(i)));
-            playerWrapper.addView(croixJoueur);
+            imgWrapper.addView(croixJoueur);
 
             //Score du joueur
-            TextView scoreJoueur = new TextView(this);
-            scoreJoueur.setLayoutParams(lpTxtView);
-            scoreJoueur.setText(String.valueOf(listJoueurs.get(i).getScore()));
-            scoreJoueur.setTextColor(Color.WHITE);
-            scoreJoueur.setGravity(Gravity.RIGHT);
+            TextView scoreJoueur = ViewsMaker.newTextView(this,
+                    String.valueOf(listJoueurs.get(i).getScore()),
+                    fontSize,
+                    Color.WHITE,
+                    0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    (float) 0.25,
+                    0,
+                    ViewsMaker.getDpFromPixel(this, 2),
+                    0,
+                    ViewsMaker.getDpFromPixel(this, 2),
+                    Gravity.RIGHT,
+                    false,
+                    false,
+                    9999,
+                    9999);
             playerWrapper.addView(scoreJoueur);
         }
 
@@ -299,24 +324,47 @@ public class WinActivity extends Activity {
             scoreWrapper.addView(playerOutWrapper);
 
             //Nom du joueur
-            TextView nameJoueurOut = new TextView(this);
-            nameJoueurOut.setLayoutParams(lpTxtView);
-            nameJoueurOut.setText(listJoueursOut.get(i).getName());
-            nameJoueurOut.setTextColor(Color.WHITE);
-            nameJoueurOut.setGravity(Gravity.LEFT);
+            TextView nameJoueurOut = ViewsMaker.newTextView(this,
+                    listJoueursOut.get(i).getName(),
+                    fontSize,
+                    Color.WHITE,
+                    0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    (float) 0.5,
+                    0,
+                    ViewsMaker.getDpFromPixel(this, 2),
+                    0,
+                    ViewsMaker.getDpFromPixel(this, 2),
+                    Gravity.LEFT,
+                    false,
+                    false,
+                    9999,
+                    9999);
             playerOutWrapper.addView(nameJoueurOut);
 
             //Croix du joueur
             ImageView croixJoueurOut = new ImageView(this);
             croixJoueurOut.setBackground(displayNbrCroixPlayerFocus(listJoueursOut.get(i)));
+            croixJoueurOut.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.25));
             playerOutWrapper.addView(croixJoueurOut);
 
             //Score du joueur
-            TextView scoreJoueurOut = new TextView(this);
-            scoreJoueurOut.setLayoutParams(lpTxtView);
-            scoreJoueurOut.setText(String.valueOf(listJoueursOut.get(i).getScore()));
-            scoreJoueurOut.setTextColor(Color.WHITE);
-            scoreJoueurOut.setGravity(Gravity.RIGHT);
+            TextView scoreJoueurOut = ViewsMaker.newTextView(this,
+                    String.valueOf(listJoueursOut.get(i).getScore()),
+                    fontSize,
+                    Color.WHITE,
+                    0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    (float) 0.25,
+                    0,
+                    ViewsMaker.getDpFromPixel(this, 2),
+                    0,
+                    ViewsMaker.getDpFromPixel(this, 2),
+                    Gravity.RIGHT,
+                    false,
+                    false,
+                    9999,
+                    9999);
             playerOutWrapper.addView(scoreJoueurOut);
         }
     }

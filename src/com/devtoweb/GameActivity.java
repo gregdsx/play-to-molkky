@@ -24,7 +24,6 @@ import android.widget.TextView;
 import com.devtoweb.factory.GameFactory;
 import com.devtoweb.factory.Player;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *
@@ -48,7 +47,6 @@ public class GameActivity extends Activity {
                 Button keel = (Button) v;
                 keel.setBackgroundResource(R.drawable.quille);
                 keel.setTextColor(Color.argb(255, 51, 204, 51));
-
 
             } else {
 
@@ -102,23 +100,28 @@ public class GameActivity extends Activity {
         headerWrapper.setGravity(Gravity.CENTER_VERTICAL);
         generalWrapper.addView(headerWrapper);
 
-        LinearLayout.LayoutParams sizeNamePlayer = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 1.5);
-        int marginLeftRightNamePlayer = ViewsMaker.getDpFromPixel(this, 10);
-        sizeNamePlayer.setMargins(marginLeftRightNamePlayer, 0, marginLeftRightNamePlayer, 0);
-
-        //Nom du joueur en cours + affichage de son nombre de croix via le drawable
-        displayNamePlayer = new TextView(this);
-        displayNamePlayer.setLayoutParams(sizeNamePlayer);
-        displayNamePlayer.setTextColor(Color.BLACK);
-        displayNamePlayer.setTextSize(28);
-        displayNamePlayer.setGravity(Gravity.LEFT);
-        displayNamePlayer.setText(getPlayerFocus().getName());
-        displayNamePlayer.setTypeface(Typeface.createFromAsset(this.getAssets(), "fonts/" + "segoescb.ttf"));
+        //Nom du joueur en cours
+        displayNamePlayer = ViewsMaker.newTextView(this,
+                getPlayerFocus().getName(),
+                28,
+                Color.BLACK,
+                0,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                (float) 1.5,
+                ViewsMaker.getDpFromPixel(this, 10),
+                0,
+                ViewsMaker.getDpFromPixel(this, 10),
+                0,
+                Gravity.LEFT,
+                false,
+                false,
+                9999,
+                9999);
         headerWrapper.addView(displayNamePlayer);
 
         //Affichage du score
         Button allScore = ViewsMaker.newButton(this, "Scores", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5, true, false, 9999, 9999);
-//        allScore.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        allScore.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         allScore.setOnTouchListener(new View.OnTouchListener() {
 
             public boolean onTouch(View v, MotionEvent event) {
@@ -245,21 +248,24 @@ public class GameActivity extends Activity {
         footerWrapper.setLayoutParams(sizeFooterWrapper);
         generalWrapper.addView(footerWrapper);
 
-        RelativeLayout.LayoutParams sizeScorePlayer = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        sizeScorePlayer.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        int marginLeftRightScorePlayer = ViewsMaker.getDpFromPixel(this, 10);
-        int marginTopBottomScorePlayer = ViewsMaker.getDpFromPixel(this, 5);
-        sizeScorePlayer.setMargins(marginLeftRightScorePlayer, marginTopBottomScorePlayer, marginLeftRightScorePlayer, marginTopBottomScorePlayer);
-
-        displayScorePlayer = new TextView(this);
-        displayScorePlayer.setText("0");
-        displayScorePlayer.setGravity(Gravity.CENTER);
-        displayScorePlayer.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        displayScorePlayer.setTypeface(Typeface.createFromAsset(this.getAssets(), "fonts/" + "snaket.ttf"));
-        displayScorePlayer.setTextColor(Color.argb(255, 255, 255, 255));
+        displayScorePlayer = ViewsMaker.newTextView(this,
+                "0",
+                ViewsMaker.getFontSizeWithScreenWidth(this),
+                Color.argb(255, 255, 255, 255),
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                0,
+                ViewsMaker.getDpFromPixel(this, 10),
+                ViewsMaker.getDpFromPixel(this, 5),
+                ViewsMaker.getDpFromPixel(this, 10),
+                ViewsMaker.getDpFromPixel(this, 5),
+                Gravity.CENTER,
+                true,
+                true,
+                RelativeLayout.CENTER_HORIZONTAL,
+                9999);
         displayScorePlayer.setBackgroundResource(R.drawable.quille_touched);
-        displayScorePlayer.setLayoutParams(sizeScorePlayer);
-        displayScorePlayer.setId(new Random().nextInt(100000));
+        displayScorePlayer.setTypeface(Typeface.createFromAsset(this.getAssets(), "fonts/" + "snaket.ttf"));
         footerWrapper.addView(displayScorePlayer);
 
         backPlayer = ViewsMaker.newButton(this, " < ", displayScorePlayer.getBackground().getMinimumWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, 0, true, true, RelativeLayout.LEFT_OF, displayScorePlayer.getId());
@@ -295,7 +301,6 @@ public class GameActivity extends Activity {
         Button setScorePlayer = ViewsMaker.newButton(this, "OK", displayScorePlayer.getBackground().getMinimumWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, 0, true, true, RelativeLayout.RIGHT_OF, displayScorePlayer.getId());
         setScorePlayer.setBackgroundResource(R.drawable.quille_touched);
         setScorePlayer.setTextColor(Color.argb(255, 255, 255, 255));
-        setScorePlayer.setGravity(Gravity.CENTER);
         setScorePlayer.setOnTouchListener(new View.OnTouchListener() {
 
             public boolean onTouch(View v, MotionEvent event) {
@@ -337,11 +342,22 @@ public class GameActivity extends Activity {
         dial.setContentView(dialWrapper, sizeDial);
 
         //Texte d'avertissement
-        TextView warning = new TextView(this);
-        warning.setLayoutParams(sizeRows);
-        warning.setText("Voulez vous vraiment quitter cette partie ? Votre partie en cours sera supprimée.");
-        warning.setTextColor(Color.WHITE);
-        warning.setGravity(Gravity.CENTER_HORIZONTAL);
+        TextView warning = ViewsMaker.newTextView(this,
+                "Voulez vous vraiment quitter cette partie ? Votre partie en cours sera supprimée.",
+                ViewsMaker.getFontSizeWithScreenWidth(this),
+                Color.WHITE,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                0,
+                0,
+                0,
+                0,
+                0,
+                Gravity.CENTER_HORIZONTAL,
+                false,
+                false,
+                9999,
+                9999);
         dialWrapper.addView(warning);
 
         LinearLayout btnsWrapper = new LinearLayout(this);
@@ -349,12 +365,8 @@ public class GameActivity extends Activity {
         btnsWrapper.setOrientation(LinearLayout.HORIZONTAL);
         dialWrapper.addView(btnsWrapper);
 
-        LinearLayout.LayoutParams sizeBtns = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5);
-
         //Retour menu et fin partie
-        Button yes = new Button(this);
-        yes.setLayoutParams(sizeBtns);
-        yes.setText("Oui");
+        Button yes = ViewsMaker.newButton(this, "Oui", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5, false, false, 9999, 9999);
         yes.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -367,9 +379,7 @@ public class GameActivity extends Activity {
         btnsWrapper.addView(yes);
 
         //Reprise de la partie en cours 
-        Button no = new Button(this);
-        no.setLayoutParams(sizeBtns);
-        no.setText("Non");
+        Button no = ViewsMaker.newButton(this, "Non", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5, false, false, 9999, 9999);
         no.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -620,6 +630,9 @@ public class GameActivity extends Activity {
         LinearLayout.LayoutParams lpPopupWrapper = new LinearLayout.LayoutParams(generalWrapper.getWidth() - generalWrapper.getPaddingLeft() * 2, generalWrapper.getHeight());
         lpPopupWrapper.leftMargin = generalWrapper.getPaddingLeft();
 
+        //Taille police pour dialog
+        int fontSizeDialog = ViewsMaker.getFontSizeWithScreenWidth(popup.getContext()) - 2;
+
         //Conteneur du popup
         LinearLayout popupWrapper = new LinearLayout(popup.getContext());
         popupWrapper.setOrientation(LinearLayout.VERTICAL);
@@ -629,34 +642,66 @@ public class GameActivity extends Activity {
 
         //Taille conteneur ligne header et joueur
         LinearLayout.LayoutParams lpTxtViewWrapper = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        //Taille des champs nom croix et score dans header et joueurs
-        LinearLayout.LayoutParams lpTxtView = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.3);
-        int marginTopBottomTxtView = ViewsMaker.getDpFromPixel(this, 2);
-        lpTxtView.setMargins(0, marginTopBottomTxtView, 0, marginTopBottomTxtView);
 
         //Header (entete pour nom, croix et score)
         LinearLayout headerWrapper = new LinearLayout(popup.getContext());
         popupWrapper.addView(headerWrapper, lpTxtViewWrapper);
 
         //Header Nom
-        TextView name = new TextView(popup.getContext());
-        name.setLayoutParams(lpTxtView);
-        name.setText("Nom");
-        name.setGravity(Gravity.CENTER_HORIZONTAL);
+        TextView name = ViewsMaker.newTextView(popup.getContext(),
+                "Nom",
+                fontSizeDialog,
+                Color.WHITE,
+                0,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                (float) 0.5,
+                0,
+                ViewsMaker.getDpFromPixel(this, 2),
+                0,
+                ViewsMaker.getDpFromPixel(this, 2),
+                Gravity.LEFT,
+                false,
+                false,
+                9999,
+                9999);
         headerWrapper.addView(name);
 
         //Header Croix
-        TextView croix = new TextView(popup.getContext());
-        croix.setLayoutParams(lpTxtView);
-        croix.setText("Croix");
-        croix.setGravity(Gravity.CENTER_HORIZONTAL);
+        TextView croix = ViewsMaker.newTextView(popup.getContext(),
+                "Croix",
+                fontSizeDialog,
+                Color.WHITE,
+                0,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                (float) 0.25,
+                0,
+                ViewsMaker.getDpFromPixel(this, 2),
+                0,
+                ViewsMaker.getDpFromPixel(this, 2),
+                Gravity.CENTER_HORIZONTAL,
+                false,
+                false,
+                9999,
+                9999);
         headerWrapper.addView(croix);
 
         //Header Score
-        TextView score = new TextView(popup.getContext());
-        score.setLayoutParams(lpTxtView);
-        score.setText("Score");
-        score.setGravity(Gravity.CENTER_HORIZONTAL);
+        TextView score = ViewsMaker.newTextView(popup.getContext(),
+                "Score",
+                fontSizeDialog,
+                Color.WHITE,
+                0,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                (float) 0.25,
+                0,
+                ViewsMaker.getDpFromPixel(this, 2),
+                0,
+                ViewsMaker.getDpFromPixel(this, 2),
+                Gravity.CENTER_HORIZONTAL,
+                false,
+                false,
+                9999,
+                9999);
         headerWrapper.addView(score);
 
         ArrayList<Player> listJoueurs = GameFactory.getGameServiceImpl().getGame().getListJoueurs();
@@ -666,27 +711,36 @@ public class GameActivity extends Activity {
 
             //Conteneur ligne joueur
             LinearLayout txtViewWrapper = new LinearLayout(popup.getContext());
+            txtViewWrapper.setGravity(Gravity.CENTER_VERTICAL);
             popupWrapper.addView(txtViewWrapper, lpTxtViewWrapper);
 
             //Nom du joueur
-            TextView newJoueur = new TextView(popup.getContext());
-            newJoueur.setLayoutParams(lpTxtView);
-            newJoueur.setText(listJoueurs.get(i).getName());
-            newJoueur.setGravity(Gravity.CENTER_HORIZONTAL);
+            TextView newJoueur = ViewsMaker.newTextView(popup.getContext(),
+                    listJoueurs.get(i).getName(),
+                    fontSizeDialog,
+                    Color.WHITE,
+                    0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    (float) 0.5,
+                    0,
+                    ViewsMaker.getDpFromPixel(this, 2),
+                    0,
+                    ViewsMaker.getDpFromPixel(this, 2),
+                    Gravity.LEFT,
+                    false,
+                    false,
+                    9999,
+                    9999);
             txtViewWrapper.addView(newJoueur);
 
             //Conteneur de l'image des croix
             LinearLayout imgWrapper = new LinearLayout(popup.getContext());
-            imgWrapper.setLayoutParams(lpTxtView);
-            imgWrapper.setGravity(Gravity.CENTER_HORIZONTAL);
+            imgWrapper.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.25));
+            imgWrapper.setGravity(Gravity.CENTER);
             txtViewWrapper.addView(imgWrapper);
-
-            //Taille de l'image des croix
-            LinearLayout.LayoutParams lpImgViewWrapper = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
             //Croix du joueur
             ImageView croixJoueur = new ImageView(popup.getContext());
-            croixJoueur.setLayoutParams(lpImgViewWrapper);
             //Controle du nombre de croix
             int nbrCroixPLayer = listJoueurs.get(i).getNbrCroix();
 
@@ -708,15 +762,27 @@ public class GameActivity extends Activity {
             imgWrapper.addView(croixJoueur);
 
             //Score du joueur
-            TextView scoreJoueur = new TextView(popup.getContext());
-            scoreJoueur.setLayoutParams(lpTxtView);
-            scoreJoueur.setText(String.valueOf(listJoueurs.get(i).getScore()));
+            TextView scoreJoueur = ViewsMaker.newTextView(popup.getContext(),
+                    String.valueOf(listJoueurs.get(i).getScore()),
+                    fontSizeDialog,
+                    Color.WHITE,
+                    0,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    (float) 0.25,
+                    0,
+                    ViewsMaker.getDpFromPixel(this, 2),
+                    0,
+                    ViewsMaker.getDpFromPixel(this, 2),
+                    Gravity.CENTER_HORIZONTAL,
+                    false,
+                    false,
+                    9999,
+                    9999);
 
             if (GameFactory.getGameServiceImpl().getGame().getPlayerMaxScore(listJoueurs) == listJoueurs.get(i).getScore()) {
                 scoreJoueur.setTextColor(Color.YELLOW);
             }
 
-            scoreJoueur.setGravity(Gravity.CENTER_HORIZONTAL);
             txtViewWrapper.addView(scoreJoueur);
         }
         popup.show();
