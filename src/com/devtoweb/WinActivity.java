@@ -10,7 +10,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -152,12 +151,22 @@ public class WinActivity extends Activity {
         dial.setContentView(dialWrapper, sizeDial);
 
         //Texte d'avertissement
-        TextView warning = new TextView(this);
-        warning.setLayoutParams(lpWrapContent);
-        warning.setText("Voulez vous vraiment quitter l'application ?");
-        warning.setTextColor(Color.WHITE);
-        warning.setTextSize(16);
-        warning.setGravity(Gravity.CENTER_HORIZONTAL);
+        TextView warning = ViewsMaker.newTextView(this,
+                "Voulez vous vraiment quitter l'application ?",
+                ViewsMaker.getFontSizeWithScreenWidth(this),
+                Color.WHITE,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                0,
+                0,
+                0,
+                0,
+                0,
+                Gravity.CENTER_HORIZONTAL,
+                false,
+                false,
+                9999,
+                9999);
         dialWrapper.addView(warning);
 
         LinearLayout btnsWrapper = new LinearLayout(this);
@@ -165,12 +174,9 @@ public class WinActivity extends Activity {
         btnsWrapper.setOrientation(LinearLayout.HORIZONTAL);
         dialWrapper.addView(btnsWrapper);
 
-        LinearLayout.LayoutParams sizeBtns = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5);
-
         //Retour menu et fin partie
-        Button yes = new Button(this);
-        yes.setLayoutParams(sizeBtns);
-        yes.setText("Oui");
+        Button yes = ViewsMaker.newButton(this, "Oui", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5, false, false, 9999, 9999);
+        yes.setBackgroundResource(android.R.drawable.btn_default);
         yes.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -183,9 +189,8 @@ public class WinActivity extends Activity {
         btnsWrapper.addView(yes);
 
         //Reprise de la partie en cours 
-        Button no = new Button(this);
-        no.setLayoutParams(sizeBtns);
-        no.setText("Non");
+        Button no = ViewsMaker.newButton(this, "Non", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5, false, false, 9999, 9999);
+        no.setBackgroundResource(android.R.drawable.btn_default);
         no.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -246,11 +251,6 @@ public class WinActivity extends Activity {
         //Tri des joueurs encore en jeu par score croissant
         Collections.sort(listJoueurs);
 
-        //Bordure de séparation entre les lignes du tableau
-        GradientDrawable border = new GradientDrawable();
-        border.setShape(GradientDrawable.LINE);
-        border.setStroke(1, Color.WHITE);
-
         //Taille police pour tableau
         int fontSize = ViewsMaker.getFontSizeWithScreenWidth(this) - 2;
 
@@ -261,7 +261,6 @@ public class WinActivity extends Activity {
             LinearLayout playerWrapper = new LinearLayout(this);
             playerWrapper.setLayoutParams(lpWrapContent);
             playerWrapper.setGravity(Gravity.CENTER_VERTICAL);
-            playerWrapper.setBackground(border);
             scoreWrapper.addView(playerWrapper);
 
             //Nom du joueur
@@ -319,7 +318,6 @@ public class WinActivity extends Activity {
             //Conteneur ligne joueur
             LinearLayout playerOutWrapper = new LinearLayout(this);
             playerOutWrapper.setLayoutParams(lpWrapContent);
-            playerOutWrapper.setBackground(border);
             playerOutWrapper.setGravity(Gravity.CENTER_VERTICAL);
             scoreWrapper.addView(playerOutWrapper);
 
@@ -342,11 +340,15 @@ public class WinActivity extends Activity {
                     9999);
             playerOutWrapper.addView(nameJoueurOut);
 
+            LinearLayout imgWrapper = new LinearLayout(this);
+            imgWrapper.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.25));
+            imgWrapper.setGravity(Gravity.CENTER);
+            playerOutWrapper.addView(imgWrapper);
+
             //Croix du joueur
             ImageView croixJoueurOut = new ImageView(this);
             croixJoueurOut.setBackground(displayNbrCroixPlayerFocus(listJoueursOut.get(i)));
-            croixJoueurOut.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.25));
-            playerOutWrapper.addView(croixJoueurOut);
+            imgWrapper.addView(croixJoueurOut);
 
             //Score du joueur
             TextView scoreJoueurOut = ViewsMaker.newTextView(this,

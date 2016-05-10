@@ -94,7 +94,7 @@ public class SetGameActivity extends Activity implements TextWatcher {
         });
         btnWrapper.addView(play);
 
-        Button addPlayer = ViewsMaker.newButton(this, "+ 1 " + kindPlayer, 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 1, true, false, 9999, 9999);
+        Button addPlayer = ViewsMaker.newButton(this, "+1 " + kindPlayer, 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 1, true, false, 9999, 9999);
         addPlayer.setOnTouchListener(new View.OnTouchListener() {
 
             public boolean onTouch(View v, MotionEvent event) {
@@ -139,7 +139,7 @@ public class SetGameActivity extends Activity implements TextWatcher {
 
         //Boite de dialogue
         final Dialog dial = new Dialog(this);
-        dial.setTitle("Plat to Mölkky");
+        dial.setTitle("Play to Mölkky");
 
         LinearLayout.LayoutParams sizeDial = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -148,12 +148,22 @@ public class SetGameActivity extends Activity implements TextWatcher {
         dial.setContentView(dialWrapper, sizeDial);
 
         //Texte d'avertissement
-        TextView warning = new TextView(this);
-        warning.setLayoutParams(lpWrapContent);
-        warning.setText("Voulez vous vraiment quitter cette partie ? Votre partie en cours sera supprimée.");
-        warning.setTextColor(Color.WHITE);
-        warning.setTextSize(12);
-        warning.setGravity(Gravity.CENTER_HORIZONTAL);
+        TextView warning = ViewsMaker.newTextView(this,
+                "Voulez vous vraiment quitter cette partie ? Votre partie en cours sera supprimée.",
+                ViewsMaker.getFontSizeWithScreenWidth(this),
+                Color.WHITE,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                0,
+                0,
+                0,
+                0,
+                0,
+                Gravity.CENTER_HORIZONTAL,
+                false,
+                false,
+                9999,
+                9999);
         dialWrapper.addView(warning);
 
         LinearLayout btnsWrapper = new LinearLayout(this);
@@ -161,12 +171,9 @@ public class SetGameActivity extends Activity implements TextWatcher {
         btnsWrapper.setOrientation(LinearLayout.HORIZONTAL);
         dialWrapper.addView(btnsWrapper);
 
-        LinearLayout.LayoutParams sizeBtns = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5);
-
         //Retour menu et fin partie
-        Button yes = new Button(this);
-        yes.setLayoutParams(sizeBtns);
-        yes.setText("Oui");
+        Button yes = ViewsMaker.newButton(this, "Oui", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5, false, false, 9999, 9999);
+        yes.setBackgroundResource(android.R.drawable.btn_default);
         yes.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -179,9 +186,8 @@ public class SetGameActivity extends Activity implements TextWatcher {
         btnsWrapper.addView(yes);
 
         //Reprise de la partie en cours 
-        Button no = new Button(this);
-        no.setLayoutParams(sizeBtns);
-        no.setText("Non");
+        Button no = ViewsMaker.newButton(this, "Non", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5, false, false, 9999, 9999);
+        no.setBackgroundResource(android.R.drawable.btn_default);
         no.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {

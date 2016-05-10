@@ -24,6 +24,4 @@ public interface GameService {
 
     boolean setScorePlayerFocus(Player playerFocus, int score);
 
-    void playerWinGame();
-
 }

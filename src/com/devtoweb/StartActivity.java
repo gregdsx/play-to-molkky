@@ -121,12 +121,22 @@ public class StartActivity extends Activity {
         dial.setContentView(dialWrapper, sizeDial);
 
         //Texte d'avertissement
-        TextView warning = new TextView(this);
-        warning.setLayoutParams(lpWrapContent);
-        warning.setText("Voulez vous vraiment quitter l'application ?");
-        warning.setTextColor(Color.WHITE);
-        warning.setTextSize(16);
-        warning.setGravity(Gravity.CENTER_HORIZONTAL);
+        TextView warning = ViewsMaker.newTextView(this,
+                "Voulez vous vraiment quitter l'application ?",
+                ViewsMaker.getFontSizeWithScreenWidth(this),
+                Color.WHITE,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                0,
+                0,
+                0,
+                0,
+                0,
+                Gravity.CENTER_HORIZONTAL,
+                false,
+                false,
+                9999,
+                9999);
         dialWrapper.addView(warning);
 
         LinearLayout btnsWrapper = new LinearLayout(this);
@@ -134,12 +144,9 @@ public class StartActivity extends Activity {
         btnsWrapper.setOrientation(LinearLayout.HORIZONTAL);
         dialWrapper.addView(btnsWrapper);
 
-        LinearLayout.LayoutParams sizeBtns = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5);
-
         //Retour menu et fin partie
-        Button yes = new Button(this);
-        yes.setLayoutParams(sizeBtns);
-        yes.setText("Oui");
+        Button yes = ViewsMaker.newButton(this, "Oui", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5, false, false, 9999, 9999);
+        yes.setBackgroundResource(android.R.drawable.btn_default);
         yes.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -152,9 +159,8 @@ public class StartActivity extends Activity {
         btnsWrapper.addView(yes);
 
         //Reprise de la partie en cours 
-        Button no = new Button(this);
-        no.setLayoutParams(sizeBtns);
-        no.setText("Non");
+        Button no = ViewsMaker.newButton(this, "Non", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5, false, false, 9999, 9999);
+        no.setBackgroundResource(android.R.drawable.btn_default);
         no.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {

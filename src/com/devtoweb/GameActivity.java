@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
  *
  * @author Greg27
  */
-public class GameActivity extends Activity {
+public class GameActivity extends Activity{
 
     private RelativeLayout generalWrapper;
     private LinearLayout wrapperMolkky;
@@ -38,6 +39,8 @@ public class GameActivity extends Activity {
     private TextView displayScorePlayer, displayNamePlayer;
     private Button backPlayer;
     private Dialog popup;
+    private GestureListener gestureListener;
+    private GestureDetector gDetector;
     private final View.OnClickListener setScore = new View.OnClickListener() {
 
         public void onClick(View v) {
@@ -59,12 +62,7 @@ public class GameActivity extends Activity {
             DisplayMetrics dis = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(dis);
 
-            System.out.println("taille restante = taille complete : " + dis.widthPixels + " - padding : " + generalWrapper.getPaddingLeft() + " x 2");
-
-            System.out.println("taille quille : " + v.getHeight() + " " + v.getWidth());
             System.out.println("taille molkky : " + wrapperMolkky.getWidth());
-            System.out.println("taille mini background : " + wrapperMolkky.getBackground().getMinimumWidth());
-            System.out.println("taille background displayscore : " + displayScorePlayer.getBackground().getMinimumHeight());
             //FIN TEST
             getCurrentScore(v.getId(), v);
         }
@@ -80,13 +78,29 @@ public class GameActivity extends Activity {
         super.onCreate(icicle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        //Gestion des events Swipe pour afficher score
+        gestureListener = new GestureListener(this);
+        gDetector = new GestureDetector(this, gestureListener);
+
         int paddingGeneralWrapper = ViewsMaker.getDpFromPixel(this, 20);
 
         generalWrapper = new RelativeLayout(this);
         generalWrapper.setLayoutParams(lpMatchParent);
         generalWrapper.setBackgroundResource(R.drawable.background);
         generalWrapper.setPadding(paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper);
+        generalWrapper.setOnTouchListener(new View.OnTouchListener() {
 
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (gDetector.onTouchEvent(event)) {
+
+                    //Affichage score sur swipe 
+                    showScore(v);
+                    return true;
+                }
+                return true;
+            }
+        });
         setContentView(generalWrapper);
 
         /**
@@ -105,9 +119,9 @@ public class GameActivity extends Activity {
                 getPlayerFocus().getName(),
                 28,
                 Color.BLACK,
-                0,
+                ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
-                (float) 1.5,
+                0,
                 ViewsMaker.getDpFromPixel(this, 10),
                 0,
                 ViewsMaker.getDpFromPixel(this, 10),
@@ -118,35 +132,6 @@ public class GameActivity extends Activity {
                 9999,
                 9999);
         headerWrapper.addView(displayNamePlayer);
-
-        //Affichage du score
-        Button allScore = ViewsMaker.newButton(this, "Scores", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 0.5, true, false, 9999, 9999);
-        allScore.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        allScore.setOnTouchListener(new View.OnTouchListener() {
-
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    v.setBackgroundResource(R.drawable.bouton_touched);
-                }
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                    v.setBackgroundResource(R.drawable.bouton);
-                }
-                return false;
-            }
-        });
-        allScore.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                /**
-                 * Affichage du score
-                 */
-                showScore(v);
-            }
-        });
-        headerWrapper.addView(allScore);
 
         /**
          * MOLKKY-------------------------------------------------------------------------
@@ -258,11 +243,11 @@ public class GameActivity extends Activity {
                 ViewsMaker.getDpFromPixel(this, 10),
                 ViewsMaker.getDpFromPixel(this, 5),
                 ViewsMaker.getDpFromPixel(this, 10),
-                ViewsMaker.getDpFromPixel(this, 5),
+                0,
                 Gravity.CENTER,
                 true,
                 true,
-                RelativeLayout.CENTER_HORIZONTAL,
+                RelativeLayout.CENTER_IN_PARENT,
                 9999);
         displayScorePlayer.setBackgroundResource(R.drawable.quille_touched);
         displayScorePlayer.setTypeface(Typeface.createFromAsset(this.getAssets(), "fonts/" + "snaket.ttf"));
@@ -277,13 +262,18 @@ public class GameActivity extends Activity {
 
             public boolean onTouch(View v, MotionEvent event) {
 
+                Button btn = (Button) v;
+
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                    v.setBackgroundResource(R.drawable.quille);
+                    btn.setBackgroundResource(R.drawable.quille);
+                    btn.setTextColor(Color.argb(255, 51, 204, 51));
+
                 }
                 if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                    v.setBackgroundResource(R.drawable.quille_touched);
+                    btn.setBackgroundResource(R.drawable.quille_touched);
+                    btn.setTextColor(Color.argb(255, 255, 255, 255));
                 }
                 return false;
             }
@@ -305,13 +295,18 @@ public class GameActivity extends Activity {
 
             public boolean onTouch(View v, MotionEvent event) {
 
+                Button btn = (Button) v;
+
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                    v.setBackgroundResource(R.drawable.quille);
+                    btn.setBackgroundResource(R.drawable.quille);
+                    btn.setTextColor(Color.argb(255, 51, 204, 51));
+
                 }
                 if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                    v.setBackgroundResource(R.drawable.quille_touched);
+                    btn.setBackgroundResource(R.drawable.quille_touched);
+                    btn.setTextColor(Color.argb(255, 255, 255, 255));
                 }
                 return false;
             }
@@ -376,6 +371,7 @@ public class GameActivity extends Activity {
                 finish();
             }
         });
+        yes.setBackgroundResource(android.R.drawable.btn_default);
         btnsWrapper.addView(yes);
 
         //Reprise de la partie en cours 
@@ -386,6 +382,7 @@ public class GameActivity extends Activity {
                 dial.dismiss();
             }
         });
+        no.setBackgroundResource(android.R.drawable.btn_default);
         btnsWrapper.addView(no);
 
         dial.show();
@@ -601,6 +598,9 @@ public class GameActivity extends Activity {
         //Disparition du bouton de retour au joueur précédent (empeche les multiples retours en arriere)
         backPlayer.setVisibility(View.INVISIBLE);
 
+        //Modificcation du nombre de croix affichée
+        displayNbrCroixPlayerFocus(playerFocus);
+
         //Remise à zéro du molkky
         resetMolkky(wrapperMolkky);
     }
@@ -610,7 +610,7 @@ public class GameActivity extends Activity {
      *
      * @param v = bouton score
      */
-    private void showScore(View v) {
+    public void showScore(View v) {
 
         //Création popup
         popup = new Dialog(v.getContext());
@@ -794,8 +794,6 @@ public class GameActivity extends Activity {
      * @param playerWinner
      */
     private void playerWinGame() {
-
-        GameFactory.getGameServiceImpl().playerWinGame();
 
         Intent intent = new Intent(GameActivity.this, WinActivity.class);
         startActivity(intent);

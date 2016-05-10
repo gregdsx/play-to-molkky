@@ -191,25 +191,4 @@ public class GameServiceImpl implements GameService {
 
         return lastPlayerFocus;
     }
-
-    public void playerWinGame() {
-
-//        //Récupération de tous les joueurs encore en jeu
-//        for (int i = 0; i < listJoueurs.size(); i++) {
-//
-//            //Récupération du joueur
-//            Player joueur = listJoueurs.get(i);
-//        }
-//
-//        //Récupération de tous les éliminés
-//        for (int i = 0; i < listJoueursOut.size(); i++) {
-//
-//            //Récupération du joueur éliminé
-//            Player joueurOut = listJoueursOut.get(i);
-//
-//        }
-
-        System.out.println("liste des joueurs in : " + game.getListJoueurs().toString());
-        System.out.println("liste des joueurs out : " + game.getListJoueursOut().toString());
-    }
 }

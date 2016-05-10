@@ -45,7 +45,7 @@ public class ViewsMaker extends Activity {
     public static Button newButton(Context context, String text, int width, int height, float weight, boolean idOrNot, boolean relOrLinear, int rule1, int rule2) {
 
         Button button;
-        int marginTopBottomBtns = getDpFromPixel(context, 5);
+        int marginBtns = getDpFromPixel(context, 5);
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "segoescb.ttf");
         /**
          * Génération d'un id "unique" (Integer)
@@ -73,7 +73,7 @@ public class ViewsMaker extends Activity {
                 sizeButton.addRule(rule1);
             }
 
-            sizeButton.setMargins(0, marginTopBottomBtns, 0, marginTopBottomBtns);
+            sizeButton.setMargins(marginBtns, marginBtns, marginBtns, marginBtns);
 
             /**
              * Création du bouton
@@ -91,7 +91,7 @@ public class ViewsMaker extends Activity {
              * Largeur, Hauteur, Poids et marges du bouton
              */
             LinearLayout.LayoutParams sizeButton = new LinearLayout.LayoutParams(width, height, weight);
-            sizeButton.setMargins(0, marginTopBottomBtns, 0, marginTopBottomBtns);
+            sizeButton.setMargins(marginBtns, marginBtns, marginBtns, marginBtns);
 
             /**
              * Création du bouton
