@@ -131,6 +131,7 @@ public class GameActivity extends Activity{
                 false,
                 9999,
                 9999);
+        displayNamePlayer.setMaxLines(1);
         headerWrapper.addView(displayNamePlayer);
 
         /**
@@ -546,8 +547,8 @@ public class GameActivity extends Activity{
         }
     }
 
-    /**
-     * Déclenchement dans setScorePlayerFocus | Remise à zéro des quilles pour nouveau joueur
+   /**
+     * Remise à zéro des quilles pour nouveau joueur
      *
      * @param molkkyWrapper = conteneur des quilles
      */
@@ -616,7 +617,7 @@ public class GameActivity extends Activity{
         popup = new Dialog(v.getContext());
         popup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        //Barre bleue de séparation du popup entre titre et contenu
+        //Barre bleue de séparation du popup entre titre et contenu à rendre trnsparent
         int divierId = popup.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
         View divider = popup.findViewById(divierId);
         if (divider != null) {

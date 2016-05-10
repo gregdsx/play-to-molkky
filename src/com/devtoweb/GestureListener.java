@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
 /**
+ * Ecouteur de GameActivity (generalWrapper) pour la gestion des swipes
  *
  * @author Greg27
  */
@@ -38,6 +39,15 @@ public class GestureListener extends SimpleOnGestureListener{
         this.gDetector = gDetector;
     }
 
+    /**
+     * Swipe détécté
+     *
+     * @param e1 Début action
+     * @param e2 Fin action
+     * @param velocityX Rapidité horizontale
+     * @param velocityY Rapidité verticale
+     * @return true si swipe horizontal
+     */
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 

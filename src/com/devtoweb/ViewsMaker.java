@@ -152,7 +152,7 @@ public class ViewsMaker extends Activity {
         editText.setTextColor(Color.BLACK);
         editText.setBackgroundColor(Color.WHITE);
         editText.setHint(hint);
-        editText.setHintTextColor(Color.BLACK);
+        editText.setHintTextColor(Color.GRAY);
         editText.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         editText.setHeight(heightEdTxt);
         editText.setTypeface(typeface);

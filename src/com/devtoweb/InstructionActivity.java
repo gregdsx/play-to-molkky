@@ -281,6 +281,7 @@ public class InstructionActivity extends FragmentActivity {
             TextView rule42 = new TextView(getContext());
             rule42.setText("- L'ordre de jeu de la première partie dépend de l'ordre des noms des joueurs enregistrés \n"
                     + "\n" + "- Pour marquer les points des joueurs, sélectionnez les quilles tombées lors du lancé du joueur (ou sélectionnez uniquement la quille corresondante au score) et appuyez sur OK pour valider le score du joueur\n"
+                    + "\n" + "- Pour afficher les scores de la partie, faites glisser votre doigt de droite à gauche, ou de gauche à droite sur l'écran de jeu\n"
                     + "\n" + "- Le lancé précédent peut être annulé si une erreur a été commise lors de l'enregistrement du score précédent. Attention vous ne pouvez effectué qu'un seul retour à la fois (vous ne pouvez revenir qu'au joueur précédent le joueur actuel)\n"
                     + "\n" + "- Quand la partie se termine, un classement est effectué du premier au dernier puis les éliminés. Si vous recommencez une partie, cet ordre sera utilisé pour favoriser les perdants de la manche précédente\n"
             );

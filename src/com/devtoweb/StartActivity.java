@@ -72,6 +72,7 @@ public class StartActivity extends Activity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(StartActivity.this, SetGameActivity.class);
+                //Type de partie solo défini en dur, en attendant la V2
                 intent.putExtra("typeDePartie", "Solo");
                 startActivity(intent);
                 finish();

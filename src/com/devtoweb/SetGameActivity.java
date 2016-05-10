@@ -114,23 +114,19 @@ public class SetGameActivity extends Activity implements TextWatcher {
 
             public void onClick(View v) {
                 /**
-                 * Enregistrement nouveau joueur / équipe
+                 * Nouvel editText pour nouvelle entrée
                  */
-                setNewPlayerEditText(v);
+                setNewPlayerEditText();
             }
         });
         btnWrapper.addView(addPlayer);
 
         EditText champ1 = ViewsMaker.newEditText(this, kindPlayer + " 1", false);
         champ1.addTextChangedListener(this);
-        champ1.setTextColor(Color.BLACK);
-        champ1.setHintTextColor(Color.BLACK);
         generalWrapper.addView(champ1);
 
         champ2 = ViewsMaker.newEditText(this, kindPlayer + " 2", false);
         champ2.addTextChangedListener(this);
-        champ2.setTextColor(Color.BLACK);
-        champ2.setHintTextColor(Color.BLACK);
         generalWrapper.addView(champ2);
     }
 
@@ -224,21 +220,13 @@ public class SetGameActivity extends Activity implements TextWatcher {
      *
      * @param v Bouton + 1 joueur
      */
-    public void setNewPlayerEditText(View v) {
+    public void setNewPlayerEditText() {
 
         //Gestion du nombre max de joueur ou equipe : max 6
         if (flagPlayer != 6) {
 
-            //Récupération d'un objet Button
-            Button b = (Button) v;
-
-            //hint à ajouter dans new champ
-            //Récupéré depuis le texte du bouton +1 = joueur ou equipe
-            String t = b.getText().toString();
-            String txtToAdd = t.substring(4, t.length());
-
             //Création edittext
-            EditText newChamp = ViewsMaker.newEditText(this, "New " + txtToAdd, true);
+            EditText newChamp = ViewsMaker.newEditText(this, "New Player", true);
             newChamp.setOnTouchListener(new View.OnTouchListener() {
 
                 public boolean onTouch(View v2, MotionEvent event) {
@@ -286,8 +274,6 @@ public class SetGameActivity extends Activity implements TextWatcher {
                     return false;
                 }
             });
-            newChamp.setTextColor(Color.BLACK);
-            newChamp.setHintTextColor(Color.BLACK);
             newChamp.addTextChangedListener(this);
             generalWrapper.addView(newChamp);
 
