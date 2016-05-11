@@ -219,7 +219,6 @@ public class SetGameActivity extends Activity implements TextWatcher {
     /**
      * Création d'un nouvel EditText pour enregistrer un nouveau joueur ou une nouvelle équipe
      *
-     * @param v Bouton + 1 joueur
      */
     public void setNewPlayerEditText() {
 
@@ -227,7 +226,7 @@ public class SetGameActivity extends Activity implements TextWatcher {
         if (flagPlayer != 6) {
 
             //Création edittext
-            EditText newChamp = ViewsMaker.newEditText(this, "New Player", true);
+            EditText newChamp = ViewsMaker.newEditText(this, "Nouveau Joueur", true);
             newChamp.setOnTouchListener(new View.OnTouchListener() {
 
                 public boolean onTouch(View v2, MotionEvent event) {

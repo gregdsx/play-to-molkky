@@ -24,4 +24,10 @@ public interface GameService {
 
     boolean setScorePlayerFocus(Player playerFocus, int score);
 
+    int getPlayerMaxScore(ArrayList<Player> listPlayers);
+
+    Player getWinner();
+
+    void restartNewGame();
+
 }

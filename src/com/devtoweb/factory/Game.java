@@ -1,7 +1,6 @@
 package com.devtoweb.factory;
 
 import java.util.ArrayList;
-import com.google.gson.Gson;
 
 /**
  * Objet principal de l'application | Gestion de la partie
@@ -68,56 +67,4 @@ public class Game{
         String rule = "La partie aura " + getNbrJoueurs() + " joueurs, avec " + getListJoueurs() + ". /n Le score max sera de " + getScoreMax() + " et le nombre de croix autorisé est de " + getNbrCroixMax();
         return rule;
     }
-
-    /**
-     * Retourne le score le plus élevé de la partie en cours
-     *
-     * @param listPlayers
-     * @return
-     */
-    public int getPlayerMaxScore(ArrayList<Player> listPlayers) {
-
-        int maxScore = 0;
-
-        for (int i = 0; i < listPlayers.size(); i++) {
-
-            int scoreFocus = listPlayers.get(i).getScore();
-
-            if (scoreFocus > maxScore) {
-                maxScore = scoreFocus;
-            }
-        }
-        return maxScore;
-    }
-
-    /**
-     * Objet game retourné en String via Json
-     *
-     * @param game
-     * @return
-     */
-    public static String gameToJson(Game game) {
-
-        Gson json = new Gson();
-
-        String str = json.toJson(game);
-
-        return str;
-    }
-
-    /**
-     * String contenant l'objet game en json, retourné en objet Game
-     *
-     * @param gameStr
-     * @return
-     */
-    public static Game jsonToGame(String gameStr) {
-
-        Gson json = new Gson();
-
-        Game game = json.fromJson(gameStr, Game.class);
-
-        return game;
-    }
-
 }

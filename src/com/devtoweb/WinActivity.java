@@ -36,7 +36,6 @@ public class WinActivity extends Activity {
     private LinearLayout scoreWrapper;
     private final RelativeLayout.LayoutParams lpMatchParent = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     private final LinearLayout.LayoutParams lpWrapContent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-    private String kindGame;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -108,7 +107,7 @@ public class WinActivity extends Activity {
         generalWrapper.addView(btnWrapper);
 
         //Recommencer la partie
-        Button back = ViewsMaker.newButton(this, "Play", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 1, false, false, 9999, 9999);
+        Button back = ViewsMaker.newButton(this, "Replay", 0, ViewGroup.LayoutParams.WRAP_CONTENT, (float) 1, false, false, 9999, 9999);
         back.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -373,38 +372,13 @@ public class WinActivity extends Activity {
     }
 
     /**
-     * Click sur btn Recommencer | Définition de la nouvelle liste de joueurs à envoyer à GameActivity, Début nouvelle partie
+     * Click sur btn Recommencer | Début nouvelle partie
      *
-     * @param listJoueur
-     * @param listJoueurOut
      */
     private void restartNewGame() {
 
-        //Nouvelle liste pour un nouvel ordre de jeu, le premier à jouer est le gagnant
-        ArrayList<Player> listJoueurNewGame = new ArrayList<Player>();
-
-        //Récupération des joueurs non éliminés
-        for (Player player : GameFactory.getGameServiceImpl().getGame().getListJoueurs()) {
-            listJoueurNewGame.add(player);
-        }
-
-        //Récupérations des joueurs éliminés
-        for (Player player : GameFactory.getGameServiceImpl().getGame().getListJoueursOut()) {
-            listJoueurNewGame.add(player);
-        }
-
-        //Création nouvelle partie : nombre de joueurs, liste des joueurs, type de partie
-        GameFactory.getGameServiceImpl().setNewGame(listJoueurNewGame.size(), listJoueurNewGame, kindGame);
-
-        //Remise à zéro de la partie
-        for (int i = 0; i < GameFactory.getGameServiceImpl().getGame().getListJoueurs().size(); i++) {
-
-            Player player = GameFactory.getGameServiceImpl().getGame().getListJoueurs().get(i);
-
-            player.setId(i);
-            player.setScore(0);
-            player.setNbrCroix(0);
-        }
+        //Nouvelle partie créée
+        GameFactory.getGameServiceImpl().restartNewGame();
 
         Intent intent = new Intent(WinActivity.this, GameActivity.class);
         startActivity(intent);

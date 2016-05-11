@@ -797,7 +797,7 @@ public class GameActivity extends Activity{
                     9999,
                     9999);
 
-            if (GameFactory.getGameServiceImpl().getGame().getPlayerMaxScore(listJoueurs) == listJoueurs.get(i).getScore()) {
+            if (GameFactory.getGameServiceImpl().getPlayerMaxScore(listJoueurs) == listJoueurs.get(i).getScore()) {
                 scoreJoueur.setTextColor(Color.YELLOW);
             }
 

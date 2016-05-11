@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.devtoweb.factory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -190,5 +185,93 @@ public class GameServiceImpl implements GameService {
         playerIdFocus = lastPlayerFocus.getId();
 
         return lastPlayerFocus;
+    }
+
+    /**
+     * Retourne le score le plus élevé de la partie en cours
+     *
+     * @param listPlayers
+     * @return
+     */
+    public int getPlayerMaxScore(ArrayList<Player> listPlayers) {
+
+        int maxScore = 0;
+
+        for (int i = 0; i < listPlayers.size(); i++) {
+
+            int scoreFocus = listPlayers.get(i).getScore();
+
+            if (scoreFocus > maxScore) {
+                maxScore = scoreFocus;
+            }
+        }
+        return maxScore;
+    }
+
+    /**
+     * Récupération du joueur gagnant
+     *
+     * @return le joueur qui a gagné la partie
+     */
+    public Player getWinner() {
+
+        //Si il ne reste plus qu'un joueur dans la partie
+        if (getGame().getListJoueurs().size() == 1) {
+
+            playerWinnner = getGame().getListJoueurs().get(0);
+
+            //Si un des joueurs a atteint 50 points
+        } else {
+
+            for (int i = 0; i < getGame().getListJoueurs().size(); i++) {
+
+                if (getGame().getListJoueurs().get(i).getScore() == 50) {
+
+                    playerWinnner = getGame().getListJoueurs().get(i);
+
+                }
+            }
+        }
+
+        return playerWinnner;
+    }
+
+    /**
+     * Création nouvelle partie avec nouvel ordre de jeu
+     *
+     */
+    public void restartNewGame() {
+
+        //Nouvelle liste pour un nouvel ordre de jeu, le premier à jouer est le gagnant
+        ArrayList<Player> listJoueurNewGame = new ArrayList<Player>();
+
+        //Tri joueurs par ordre croissant selon score
+        Collections.sort(GameFactory.getGameServiceImpl().getGame().getListJoueurs());
+
+        //Récupération des joueurs non éliminés
+        for (Player player : GameFactory.getGameServiceImpl().getGame().getListJoueurs()) {
+            listJoueurNewGame.add(player);
+        }
+
+        //Récupérations des joueurs éliminés
+        for (Player player : GameFactory.getGameServiceImpl().getGame().getListJoueursOut()) {
+            listJoueurNewGame.add(player);
+        }
+
+        //Récupération style de jeu
+        String kindGame = GameFactory.getGameServiceImpl().getGame().getKindGame();
+
+        //Création nouvelle partie : nombre de joueurs, liste des joueurs, type de partie
+        GameFactory.getGameServiceImpl().setNewGame(listJoueurNewGame.size(), listJoueurNewGame, kindGame);
+
+        //Remise à zéro de la partie
+        for (int i = 0; i < GameFactory.getGameServiceImpl().getGame().getListJoueurs().size(); i++) {
+
+            Player player = GameFactory.getGameServiceImpl().getGame().getListJoueurs().get(i);
+
+            player.setId(i);
+            player.setScore(0);
+            player.setNbrCroix(0);
+        }
     }
 }
