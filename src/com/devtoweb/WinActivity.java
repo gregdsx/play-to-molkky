@@ -167,6 +167,7 @@ public class WinActivity extends Activity {
                 false,
                 9999,
                 9999);
+        warning.setSingleLine(false);
         dialWrapper.addView(warning);
 
         LinearLayout btnsWrapper = new LinearLayout(this);
@@ -252,7 +253,7 @@ public class WinActivity extends Activity {
         Collections.sort(listJoueurs);
 
         //Taille police pour tableau
-        int fontSize = ViewsMaker.getFontSizeWithScreenWidth(this) - 2;
+        int fontSize = ViewsMaker.getFontSizeWithScreenWidth(this) - 4;
 
         //Ajout d'un textview pour chaque joueurs en cours
         for (int i = 0; i < listJoueurs.size(); i++) {

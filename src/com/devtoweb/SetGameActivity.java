@@ -160,6 +160,7 @@ public class SetGameActivity extends Activity implements TextWatcher {
                 false,
                 9999,
                 9999);
+        warning.setSingleLine(false);
         dialWrapper.addView(warning);
 
         LinearLayout btnsWrapper = new LinearLayout(this);

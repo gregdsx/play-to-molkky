@@ -60,16 +60,21 @@ public class GestureListener extends SimpleOnGestureListener{
         float end = e2.getX();
 
         if (Math.abs(velocityX) < minSwipeVelocity) {
+
             return false;
         }
 
-        if (start - end > minSwipeDistance) {
-            System.out.println("right to left");
+        else if (start - end > minSwipeDistance) {
+
+            return true;
 
         } else if (end - start > minSwipeDistance) {
-            System.out.println("left to right");
-        }
 
-        return true;
+            return true;
+
+        } else {
+
+            return false;
+        }
     }
 }

@@ -63,6 +63,7 @@ public class GameActivity extends Activity{
             getWindowManager().getDefaultDisplay().getMetrics(dis);
 
             System.out.println("taille molkky : " + wrapperMolkky.getWidth());
+            System.out.println(displayNamePlayer.getTextSize());
             //FIN TEST
             getCurrentScore(v.getId(), v);
         }
@@ -122,9 +123,9 @@ public class GameActivity extends Activity{
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 0,
-                ViewsMaker.getDpFromPixel(this, 10),
+                10,
                 0,
-                ViewsMaker.getDpFromPixel(this, 10),
+                10,
                 0,
                 Gravity.LEFT,
                 false,
@@ -232,6 +233,7 @@ public class GameActivity extends Activity{
 
         RelativeLayout footerWrapper = new RelativeLayout(this);
         footerWrapper.setLayoutParams(sizeFooterWrapper);
+        footerWrapper.setGravity(Gravity.CENTER);
         generalWrapper.addView(footerWrapper);
 
         displayScorePlayer = ViewsMaker.newTextView(this,
@@ -241,9 +243,9 @@ public class GameActivity extends Activity{
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 0,
-                ViewsMaker.getDpFromPixel(this, 10),
-                ViewsMaker.getDpFromPixel(this, 5),
-                ViewsMaker.getDpFromPixel(this, 10),
+                5,
+                10,
+                5,
                 0,
                 Gravity.CENTER,
                 true,
@@ -354,6 +356,7 @@ public class GameActivity extends Activity{
                 false,
                 9999,
                 9999);
+        warning.setSingleLine(false);
         dialWrapper.addView(warning);
 
         LinearLayout btnsWrapper = new LinearLayout(this);
@@ -616,6 +619,7 @@ public class GameActivity extends Activity{
         //Création popup
         popup = new Dialog(v.getContext());
         popup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //Barre bleue de séparation du popup entre titre et contenu à rendre trnsparent
         int divierId = popup.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
@@ -626,13 +630,26 @@ public class GameActivity extends Activity{
 
         ScrollView scroll = new ScrollView(this);
         scroll.setFillViewport(true);
+        scroll.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (gDetector.onTouchEvent(event)) {
+
+                    //Fermeture popup
+                    popup.dismiss();
+                    return true;
+                }
+                return true;
+            }
+        });
         popup.setContentView(scroll);
 
         LinearLayout.LayoutParams lpPopupWrapper = new LinearLayout.LayoutParams(generalWrapper.getWidth() - generalWrapper.getPaddingLeft() * 2, generalWrapper.getHeight());
         lpPopupWrapper.leftMargin = generalWrapper.getPaddingLeft();
 
         //Taille police pour dialog
-        int fontSizeDialog = ViewsMaker.getFontSizeWithScreenWidth(popup.getContext()) - 2;
+        int fontSizeDialog = ViewsMaker.getFontSizeWithScreenWidth(popup.getContext()) - 4;
 
         //Conteneur du popup
         LinearLayout popupWrapper = new LinearLayout(popup.getContext());
@@ -660,7 +677,7 @@ public class GameActivity extends Activity{
                 ViewsMaker.getDpFromPixel(this, 2),
                 0,
                 ViewsMaker.getDpFromPixel(this, 2),
-                Gravity.LEFT,
+                Gravity.CENTER_HORIZONTAL,
                 false,
                 false,
                 9999,
@@ -796,7 +813,7 @@ public class GameActivity extends Activity{
      */
     private void playerWinGame() {
 
-        Intent intent = new Intent(GameActivity.this, WinActivity.class);
+        Intent intent = new Intent(GameActivity.this, TrophyActivity.class);
         startActivity(intent);
         finish();
     }

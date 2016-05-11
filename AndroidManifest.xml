@@ -18,6 +18,9 @@
         <activity android:name="GameActivity"
                   android:screenOrientation="portrait">
         </activity>
+        <activity android:name="TrophyActivity"
+                  android:screenOrientation="portrait">
+        </activity>
         <activity android:name="WinActivity"
                   android:screenOrientation="portrait">
         </activity>

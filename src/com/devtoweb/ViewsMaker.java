@@ -46,7 +46,7 @@ public class ViewsMaker extends Activity {
 
         Button button;
         int marginBtns = getDpFromPixel(context, 5);
-        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "segoescb.ttf");
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "komika_hand.ttf");
         /**
          * Génération d'un id "unique" (Integer)
          */
@@ -106,7 +106,7 @@ public class ViewsMaker extends Activity {
 
         button.setTextColor(Color.BLACK);
         button.setBackgroundResource(R.drawable.bouton);
-        button.setTextSize(TypedValue.COMPLEX_UNIT_SP, getFontSizeWithScreenWidth(context));
+        button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, getFontSizeWithScreenWidth(context));
         button.setGravity(Gravity.CENTER);
         button.setTypeface(typeface);
 
@@ -124,7 +124,7 @@ public class ViewsMaker extends Activity {
     public static EditText newEditText(Context context, String hint, boolean drawableOrNot) {
 
         EditText editText;
-        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "segoesc.ttf");
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "komika_hand.ttf");
 
         /**
          * Génération d'un id "unique" (Integer)
@@ -157,6 +157,7 @@ public class ViewsMaker extends Activity {
         editText.setHeight(heightEdTxt);
         editText.setTypeface(typeface);
         editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, getFontSizeWithScreenWidth(context));
+        editText.setLongClickable(false);
 
         //Gestion d'un drawable
         if (drawableOrNot) {
@@ -234,7 +235,7 @@ public class ViewsMaker extends Activity {
     public static TextView newTextView(Context context, String text, int textSize, int textColor, int width, int height, float weight, int marginLeft, int marginTop, int marginRight, int marginBottom, int gravity, boolean idOrNot, boolean relOrNot, int rule1, int rule2) {
 
         TextView textView;
-        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "segoesc.ttf");
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "komika_hand.ttf");
 
         Random r = new Random();
         r.nextInt();
@@ -246,6 +247,8 @@ public class ViewsMaker extends Activity {
         textView.setTextColor(textColor);
         textView.setTypeface(typeface);
         textView.setGravity(gravity);
+        textView.setHorizontalFadingEdgeEnabled(true);
+        textView.setSingleLine();
 
         if (idOrNot) {
             textView.setId(id);
