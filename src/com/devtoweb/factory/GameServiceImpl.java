@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
+ * Surchage des fonctions métiers définies depuis GameService
  *
  * @author Greg27
  */
@@ -152,7 +153,7 @@ public class GameServiceImpl implements GameService {
      *
      * @param lastScore
      * @param lastNbrCroix
-     * @return
+     * @return Dernier joueur à avoir lancé
      */
     public Player getLastPlayer(int lastScore, int lastNbrCroix) {
 
@@ -191,7 +192,7 @@ public class GameServiceImpl implements GameService {
      * Retourne le score le plus élevé de la partie en cours
      *
      * @param listPlayers
-     * @return
+     * @return Score le plus élevé
      */
     public int getPlayerMaxScore(ArrayList<Player> listPlayers) {
 

@@ -23,6 +23,7 @@ import com.devtoweb.factory.Player;
 import java.util.ArrayList;
 
 /**
+ * Activité de mise en place de la partie. Enregistrement des noms et création de la partie
  *
  * @author Greg27
  */
@@ -36,7 +37,9 @@ public class SetGameActivity extends Activity implements TextWatcher {
     private Bundle bundle;
     private EditText champ2;
     private int flagPlayer = 2;
-    private Toast toast;
+    private boolean flagSizeName = false;
+    private boolean flagSpecialCar = false;
+    private boolean flagNbrPlayers = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -283,12 +286,13 @@ public class SetGameActivity extends Activity implements TextWatcher {
         } else {
 
             //Si toast vient d'etre crée ou si il est déja visible, pas de nouvel affichage du toast
-            if (toast == null || toast.getView().getWindowVisibility() != View.VISIBLE) {
-                toast = Toast.makeText(getApplicationContext(),
+            if (!flagNbrPlayers) {
+                Toast toast = Toast.makeText(getApplicationContext(),
                         "Nombre de joueurs maximum atteint (6 max)", Toast.LENGTH_SHORT);
                 toast.show();
-            } else {
-                toast.cancel();
+
+                //Flag = true, plus d'affichage de toast
+                flagNbrPlayers = true;
             }
         }
     }
@@ -396,12 +400,13 @@ public class SetGameActivity extends Activity implements TextWatcher {
                 s.delete(s.length() - 1, s.length());
 
                 //Si toast vient d'etre crée ou si il est déja visible, pas de nouvel affichage du toast
-                if (toast == null || toast.getView().getWindowVisibility() != View.VISIBLE) {
-                    toast = Toast.makeText(getApplicationContext(),
-                            "T'as besoin que de lettres pour ton nom !!", Toast.LENGTH_SHORT);
+                if (!flagSpecialCar) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "T'as besoin que de lettres pour ton nom !!", Toast.LENGTH_LONG);
                     toast.show();
-                } else {
-                    toast.cancel();
+
+                    //Flag true = plus d'affichage de toast
+                    flagSpecialCar = true;
                 }
             }
         }
@@ -413,12 +418,13 @@ public class SetGameActivity extends Activity implements TextWatcher {
             s.delete(s.length() - 1, s.length());
 
             //Si toast vient d'etre crée ou si il est déja visible, pas de nouvel affichage du toast
-            if (toast == null || toast.getView().getWindowVisibility() != View.VISIBLE) {
-                toast = Toast.makeText(getApplicationContext(),
-                        "Pas un nom si grand..!", Toast.LENGTH_SHORT);
+            if (!flagSizeName) {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Pas un nom si grand..!", Toast.LENGTH_LONG);
                 toast.show();
-            } else {
-                toast.cancel();
+
+                //Flag true = plus d'affichage de toast
+                flagSizeName = true;
             }
         }
 

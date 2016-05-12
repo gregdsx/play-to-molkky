@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.devtoweb;
 
 import android.app.Activity;
@@ -23,6 +18,7 @@ import android.widget.TextView;
 import java.util.Random;
 
 /**
+ * Classe génératrice de vues pour les Activtés
  *
  * @author Greg27
  */
@@ -156,7 +152,7 @@ public class ViewsMaker extends Activity {
         editText.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         editText.setHeight(heightEdTxt);
         editText.setTypeface(typeface);
-        editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, getFontSizeWithScreenWidth(context));
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, getFontSizeWithScreenWidth(context));
         editText.setLongClickable(false);
 
         //Gestion d'un drawable
@@ -243,7 +239,7 @@ public class ViewsMaker extends Activity {
 
         textView = new TextView(context);
         textView.setText(text);
-        textView.setTextSize((float) textSize);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, (float) textSize);
         textView.setTextColor(textColor);
         textView.setTypeface(typeface);
         textView.setGravity(gravity);

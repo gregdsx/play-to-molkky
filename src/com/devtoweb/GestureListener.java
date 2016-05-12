@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.devtoweb;
 
 import android.content.Context;
@@ -13,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
 /**
- * Ecouteur de GameActivity (generalWrapper) pour la gestion des swipes
+ * Ecouteur de GameActivity (generalWrapper) pour la gestion des swipe : affichge des scores
  *
  * @author Greg27
  */

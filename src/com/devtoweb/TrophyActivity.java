@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.devtoweb;
 
 import android.app.Activity;
@@ -24,6 +18,7 @@ import android.widget.TextView;
 import com.devtoweb.factory.GameFactory;
 
 /**
+ * Activité passerelle après la victoire d'un joueur. Affichage du nom du vainqueur. Possibilité de recommencer ou voir les scores généraux.
  *
  * @author Greg27
  */
@@ -154,7 +149,7 @@ public class TrophyActivity extends Activity {
 
         //Texte d'avertissement
         TextView warning = ViewsMaker.newTextView(this,
-                "Voulez vous vraiment retourner au menu sans voir les scores ?.",
+                "Voulez vous vraiment retourner au menu sans voir les scores ?",
                 ViewsMaker.getFontSizeWithScreenWidth(this),
                 Color.WHITE,
                 ViewGroup.LayoutParams.MATCH_PARENT,

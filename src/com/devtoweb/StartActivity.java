@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * Première page accessible à l'utilisateur Plusieurs choix disponibles Nouvelle partie, score, options
+ * Première page accessible à l'utilisateur et launcher. Choix de jeu ou voir les instructions
  */
 public class StartActivity extends Activity {
 

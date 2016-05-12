@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Time Of Mollky</string>
+    <string name="app_name">Play to Mölkky - ScoreKeeper</string>
+    <string name="description">Play To Mölkky est un compte score pour le jeu Mölkky. Vous l'utiliserez tout au long de vos parties de Mölkky pour vous rappeler l'ordre de jeu, les points et le nombre de croix de chaque joueurs. Mais également à savoir qui est éliminé et qui gagne la partie ! </string>
 </resources>

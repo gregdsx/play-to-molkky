@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -27,6 +26,7 @@ import com.devtoweb.factory.Player;
 import java.util.ArrayList;
 
 /**
+ * Activité de gestion de la partie. Enregistrement des scores des joueurs tour à tour, éliminations, déclenchement de la victoire
  *
  * @author Greg27
  */
@@ -57,13 +57,6 @@ public class GameActivity extends Activity{
                 keel.setBackgroundResource(R.drawable.quille_touched);
                 keel.setTextColor(Color.argb(255, 255, 255, 255));
             }
-
-            //TEST
-            DisplayMetrics dis = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(dis);
-
-            System.out.println("taille molkky : " + wrapperMolkky.getWidth());
-            System.out.println(displayNamePlayer.getTextSize());
             //FIN TEST
             getCurrentScore(v.getId(), v);
         }
@@ -258,7 +251,8 @@ public class GameActivity extends Activity{
 
         backPlayer = ViewsMaker.newButton(this, " < ", displayScorePlayer.getBackground().getMinimumWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, 0, true, true, RelativeLayout.LEFT_OF, displayScorePlayer.getId());
         backPlayer.setBackgroundResource(R.drawable.quille_touched);
-        backPlayer.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 24);
+        backPlayer.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 26);
+        backPlayer.setTypeface(Typeface.createFromAsset(this.getAssets(), "fonts/" + "segoeprb.ttf"));
         backPlayer.setTextColor(Color.argb(255, 255, 255, 255));
         backPlayer.setVisibility(View.INVISIBLE);
         backPlayer.setOnTouchListener(new View.OnTouchListener() {

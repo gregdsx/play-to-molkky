@@ -1,7 +1,5 @@
 package com.devtoweb.factory;
 
-import com.google.gson.Gson;
-
 /**
  * Objet utilisé à la fois pour les match en solo ou en équipe
  *
@@ -52,36 +50,6 @@ public class Player implements Comparable<Player> {
     @Override
     public String toString() {
         String player = getName() + "|" + getScore() + "|" + getNbrCroix();
-        return player;
-    }
-
-    /**
-     * Objet player retourné en String via Json
-     *
-     * @param player
-     * @return
-     */
-    public static String playerToJson(Player player) {
-
-        Gson json = new Gson();
-
-        String str = json.toJson(player);
-
-        return str;
-    }
-
-    /**
-     * String contenant l'objet player en json, retourné en objet Player
-     *
-     * @param playerStr
-     * @return
-     */
-    public static Player jsonToPlayer(String playerStr) {
-
-        Gson json = new Gson();
-
-        Player player = json.fromJson(playerStr, Player.class);
-
         return player;
     }
 

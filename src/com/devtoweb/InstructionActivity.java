@@ -21,6 +21,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
+ * Activité qui contient les règles du jeu Mölkky et les explications au fonctionnement de l'apllication
  *
  * @author Greg27
  */
@@ -30,6 +31,7 @@ public class InstructionActivity extends FragmentActivity {
     private final LinearLayout.LayoutParams lpWrapContent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     private LinearLayout generalWrapper;
     private PagerAdapter pageAdapter;
+    private static ArrayList<Fragment> slides;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -67,7 +69,7 @@ public class InstructionActivity extends FragmentActivity {
         generalWrapper.addView(instructionsWrapper);
 
         //Liste des fragments (pages)
-        ArrayList<Fragment> slides = new ArrayList<Fragment>();
+        slides = new ArrayList<Fragment>();
 
         //Ajout des fragments (pages)
         slides.add(Fragment.instantiate(this, FirstSlide.class.getName()));
@@ -131,10 +133,19 @@ public class InstructionActivity extends FragmentActivity {
             LinearLayout rule1wrapper = new LinearLayout(getContext());
             rule1wrapper.setLayoutParams(lpMatchParent);
             rule1wrapper.setGravity(Gravity.CENTER);
+            rule1wrapper.setOrientation(LinearLayout.VERTICAL);
             int paddingLeftRightRule1 = ViewsMaker.getDpFromPixel(getContext(), 5);
             int paddingTopRule1 = ViewsMaker.getDpFromPixel(getContext(), 20);
             rule1wrapper.setPadding(paddingLeftRightRule1, paddingTopRule1, paddingLeftRightRule1, 0);
             scroll.addView(rule1wrapper);
+
+            TextView markerSlides = new TextView(getContext());
+            markerSlides.setText("1 / " + slides.size());
+            markerSlides.setTextColor(Color.BLACK);
+            markerSlides.setTextSize(16);
+            markerSlides.setPadding(0, 0, 0, ViewsMaker.getDpFromPixel(getContext(), 10));
+            markerSlides.setGravity(Gravity.CENTER_HORIZONTAL);
+            rule1wrapper.addView(markerSlides);
 
             TextView rule1 = new TextView(getContext());
             rule1.setText("Le principe du jeu est de faire tomber les quilles en bois à l’aide du lanceur appelé Mölkky. Les quilles sont marquées de 1 à 12. Le premier ou la première à totaliser exactement 50 points gagne la partie.\n"
@@ -169,6 +180,14 @@ public class InstructionActivity extends FragmentActivity {
             int paddingTopRule2 = ViewsMaker.getDpFromPixel(getContext(), 20);
             rule2wrapper.setPadding(paddingLeftRightRule2, paddingTopRule2, paddingLeftRightRule2, 0);
             scroll.addView(rule2wrapper);
+
+            TextView markerSlides = new TextView(getContext());
+            markerSlides.setText("2 / " + slides.size());
+            markerSlides.setTextColor(Color.BLACK);
+            markerSlides.setTextSize(16);
+            markerSlides.setPadding(0, 0, 0, ViewsMaker.getDpFromPixel(getContext(), 10));
+            markerSlides.setGravity(Gravity.CENTER_HORIZONTAL);
+            rule2wrapper.addView(markerSlides);
 
             TextView rule2 = new TextView(getContext());
             rule2.setText("Le placement des quilles au départ de la partie : " + "\n");
@@ -216,6 +235,14 @@ public class InstructionActivity extends FragmentActivity {
             rule3wrapper.setPadding(paddingLeftRightRule3, paddingTopRule3, paddingLeftRightRule3, 0);
             scroll.addView(rule3wrapper);
 
+            TextView markerSlides = new TextView(getContext());
+            markerSlides.setText("3 / " + slides.size());
+            markerSlides.setTextColor(Color.BLACK);
+            markerSlides.setTextSize(16);
+            markerSlides.setPadding(0, 0, 0, ViewsMaker.getDpFromPixel(getContext(), 10));
+            markerSlides.setGravity(Gravity.CENTER_HORIZONTAL);
+            rule3wrapper.addView(markerSlides);
+
             TextView newRule = new TextView(getContext());
             newRule.setText("Régles spéciales :" + "\n");
             newRule.setTextSize(16);
@@ -258,6 +285,14 @@ public class InstructionActivity extends FragmentActivity {
             rule4wrapper.setPadding(paddingLeftRightRule4, paddingTopRule4, paddingLeftRightRule4, 0);
             scroll.addView(rule4wrapper);
 
+            TextView markerSlides = new TextView(getContext());
+            markerSlides.setText("4 / " + slides.size());
+            markerSlides.setTextColor(Color.BLACK);
+            markerSlides.setTextSize(16);
+            markerSlides.setPadding(0, 0, 0, ViewsMaker.getDpFromPixel(getContext(), 10));
+            markerSlides.setGravity(Gravity.CENTER_HORIZONTAL);
+            rule4wrapper.addView(markerSlides);
+
             TextView titleRule = new TextView(getContext());
             titleRule.setText("Comment utiliser Play To Mölkky ? :" + "\n");
             titleRule.setTextSize(16);
@@ -282,7 +317,7 @@ public class InstructionActivity extends FragmentActivity {
             rule42.setText("- L'ordre de jeu de la première partie dépend de l'ordre des noms des joueurs enregistrés \n"
                     + "\n" + "- Pour marquer les points des joueurs, sélectionnez les quilles tombées lors du lancé du joueur (ou sélectionnez uniquement la quille corresondante au score) et appuyez sur OK pour valider le score du joueur\n"
                     + "\n" + "- Pour afficher les scores de la partie, faites glisser votre doigt de droite à gauche, ou de gauche à droite sur l'écran de jeu. Pour revenir au jeu, faites le même mouvement sur le tableau des scores.\n"
-                    + "\n" + "- Le lancé précédent peut être annulé si une erreur a été commise lors de l'enregistrement du score précédent. Attention vous ne pouvez effectué qu'un seul retour à la fois (vous ne pouvez revenir qu'au joueur précédent le joueur actuel)\n"
+                    + "\n" + "- Le lancé précédent peut être annulé, en appuyant sur le bouton retour représenté par une flèche, si une erreur a été commise lors de l'enregistrement du score précédent. Attention vous ne pouvez effectué qu'un seul retour à la fois (vous ne pouvez revenir qu'au joueur précédent le joueur actuel)\n"
                     + "\n" + "- Quand la partie se termine, un classement est effectué du premier au dernier puis les éliminés. Si vous recommencez une partie, cet ordre sera utilisé pour favoriser les perdants de la manche précédente\n"
             );
             rule42.setTextColor(Color.BLACK);

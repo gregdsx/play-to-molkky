@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 /**
- * Choix du mode de jeu : seul ou en équipe
+ * Choix du mode de jeu : seul ou en équipe | Non utilisée pour la version 1.0
  *
  * @author Greg27
  */
