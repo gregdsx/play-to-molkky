@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.GestureDetector;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,7 +39,7 @@ public class GameActivity extends Activity{
     private final RelativeLayout.LayoutParams lpMatchParent = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     private final RelativeLayout.LayoutParams sizeRows = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     private TextView displayScorePlayer, displayNamePlayer;
-    private Button backPlayer;
+    private Button backPlayer, setScorePlayer;
     private Dialog popup;
     private GestureListener gestureListener;
     private GestureDetector gDetector;
@@ -45,6 +47,7 @@ public class GameActivity extends Activity{
 
         public void onClick(View v) {
 
+            //Gestion changement de background pour la quille touchée
             if (v.isSelected()) {
 
                 Button keel = (Button) v;
@@ -57,7 +60,8 @@ public class GameActivity extends Activity{
                 keel.setBackgroundResource(R.drawable.quille_touched);
                 keel.setTextColor(Color.argb(255, 255, 255, 255));
             }
-            //FIN TEST
+
+            //Récupération et affichage du score en cours
             getCurrentScore(v.getId(), v);
         }
     };
@@ -108,15 +112,64 @@ public class GameActivity extends Activity{
         headerWrapper.setGravity(Gravity.CENTER_VERTICAL);
         generalWrapper.addView(headerWrapper);
 
+        LinearLayout.LayoutParams lpHelp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        lpHelp.setMargins(0, 0, ViewsMaker.getDpFromPixel(this, 5), 0);
+
+        //Conteneur de l'image button help
+        LinearLayout wrapperHelp = new LinearLayout(this);
+        wrapperHelp.setLayoutParams(lpHelp);
+        wrapperHelp.setGravity(Gravity.CENTER);
+        headerWrapper.addView(wrapperHelp);
+
+        //Bouton d'aide pour la partie
+        ImageView help = new ImageButton(this);
+        help.setBackgroundResource(R.drawable.help);
+        help.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+                    v.setBackgroundResource(R.drawable.help_touched);
+
+                }
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                    v.setBackgroundResource(R.drawable.help);
+                }
+                return false;
+            }
+        });
+        help.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                //Affichage de l'aide pour la parie
+                showHelp(v);
+            }
+        });
+        wrapperHelp.addView(help);
+
+        //Couleur du dégradé
+        int[] colorTab = new int[2];
+        colorTab[0] = Color.argb(200, 255, 255, 255);
+        colorTab[1] = Color.argb(255, 51, 204, 51);
+
+        //Background en dégradé
+        GradientDrawable bkgNamePlayer = new GradientDrawable();
+        bkgNamePlayer.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
+        bkgNamePlayer.setGradientType(GradientDrawable.LINEAR_GRADIENT);
+        bkgNamePlayer.setColors(colorTab);
+
         //Nom du joueur en cours
         displayNamePlayer = ViewsMaker.newTextView(this,
                 getPlayerFocus().getName(),
                 28,
                 Color.BLACK,
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
                 0,
-                10,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                (float) 0.85,
+                2,
                 0,
                 10,
                 0,
@@ -126,6 +179,7 @@ public class GameActivity extends Activity{
                 9999,
                 9999);
         displayNamePlayer.setMaxLines(1);
+        displayNamePlayer.setBackground(bkgNamePlayer);
         headerWrapper.addView(displayNamePlayer);
 
         /**
@@ -285,7 +339,7 @@ public class GameActivity extends Activity{
         });
         footerWrapper.addView(backPlayer);
 
-        Button setScorePlayer = ViewsMaker.newButton(this, "OK", displayScorePlayer.getBackground().getMinimumWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, 0, true, true, RelativeLayout.RIGHT_OF, displayScorePlayer.getId());
+        setScorePlayer = ViewsMaker.newButton(this, "X", displayScorePlayer.getBackground().getMinimumWidth(), ViewGroup.LayoutParams.WRAP_CONTENT, 0, true, true, RelativeLayout.RIGHT_OF, displayScorePlayer.getId());
         setScorePlayer.setBackgroundResource(R.drawable.quille_touched);
         setScorePlayer.setTextColor(Color.argb(255, 255, 255, 255));
         setScorePlayer.setOnTouchListener(new View.OnTouchListener() {
@@ -460,6 +514,16 @@ public class GameActivity extends Activity{
                 displayScorePlayer.setText(String.valueOf(newScore));
             }
         }
+
+        //Gestion texte pour bouton setscoreplayer
+        if (listIdBtnPressed.isEmpty()) {
+
+            setScorePlayer.setText("X");
+
+        } else {
+
+            setScorePlayer.setText("OK");
+        }
     }
 
     /**
@@ -497,14 +561,6 @@ public class GameActivity extends Activity{
             //Remise à zéro du molkky (boutons touchés), de la liste de quilles touchées et de l'affichage du score
             resetMolkky(wrapperMolkky);
 
-            //Nom du nouveau joueur
-            displayNamePlayer.setText(GameFactory.getGameServiceImpl().getPlayerFocus().getName());
-
-            //Affichage de l'image correspondant au nombre de croix du joueur
-            displayNbrCroixPlayerFocus(GameFactory.getGameServiceImpl().getPlayerFocus());
-
-            //Si il n'y a pas eu de suppression de joueurs, backPlayer deviens disponible
-            //Si un joueur est supprimé, pas de retour en arrière possible
             if (nbrJoueursInGame == nbrJoueursInGameAfterSetScore) {
 
                 backPlayer.setVisibility(View.VISIBLE);
@@ -549,35 +605,105 @@ public class GameActivity extends Activity{
      *
      * @param molkkyWrapper = conteneur des quilles
      */
-    private void resetMolkky(LinearLayout molkkyWrapper) {
+    private void resetMolkky(final LinearLayout molkkyWrapper) {
 
-        Button quille;
-
-        //Suppression des quilles dans la liste dynamique
-        listIdBtnPressed.clear();
-
-        //Récupération des enfants du conteneur molkky
+        //Clique sur quille impossible pendant animation
         for (int i = 0; i < molkkyWrapper.getChildCount(); i++) {
 
-            //Rangée de quilles
             RelativeLayout rl = (RelativeLayout) molkkyWrapper.getChildAt(i);
 
-            //Pour chaque quilles dans la rangée
             for (int j = 0; j < rl.getChildCount(); j++) {
 
-                //Si c'est bien une quille (pas un Space)
-                if (!rl.getChildAt(j).getClass().toString().equals("class android.widget.Space")) {
-
-                    //Marquage de la quille comme non touchée et changement background
-                    quille = (Button) rl.getChildAt(j);
-                    quille.setSelected(false);
-                    quille.setBackgroundResource(R.drawable.quille);
-                    quille.setTextColor(Color.argb(255, 51, 204, 51));
-                }
+                //Quille untouchable
+                rl.getChildAt(j).setEnabled(false);
             }
         }
-        //Remise à zéro de l'affichage du score
-        displayScorePlayer.setText("0");
+
+        //Clique sur boutons retour et ok impossible pendant l'animation
+        setScorePlayer.setEnabled(false);
+        backPlayer.setEnabled(false);
+
+        //Animation des quilles au changement de joueur
+        //Mouvement de 3000px sur la gauche pour disparaitre à la suite des autres        
+        molkkyWrapper.getChildAt(0).animate().x(-3000).withEndAction(new Runnable() {
+
+            //Mouvement deuxieme rangée
+            public void run() {
+
+                molkkyWrapper.getChildAt(1).animate().x(-3000).withEndAction(new Runnable() {
+
+                    //Mouvement troisieme rangée
+                    public void run() {
+
+                        molkkyWrapper.getChildAt(2).animate().x(-3000).withEndAction(new Runnable() {
+
+                            //Mouvement quatrième rangée
+                            public void run() {
+
+                                molkkyWrapper.getChildAt(3).animate().x(-3000).withStartAction(new Runnable() {
+
+                                    //Action au début de la quatrième animation 
+                                    public void run() {
+
+                                        //Suppression des quilles dans la liste dynamique
+                                        listIdBtnPressed.clear();
+
+                                        //Récupération des enfants du conteneur molkky
+                                        for (int i = 0; i < molkkyWrapper.getChildCount(); i++) {
+
+                                            //Rangée de quilles
+                                            RelativeLayout rl = (RelativeLayout) molkkyWrapper.getChildAt(i);
+
+                                            //Pour chaque quilles dans la rangée
+                                            for (int j = 0; j < rl.getChildCount(); j++) {
+
+                                                //Si c'est bien une quille (pas un Space)
+                                                if (!rl.getChildAt(j).getClass().toString().equals("class android.widget.Space")) {
+
+                                                    //Marquage de la quille comme non touchée, changement background, focusable récupérés
+                                                    Button quille = (Button) rl.getChildAt(j);
+                                                    quille.setSelected(false);
+                                                    quille.setBackgroundResource(R.drawable.quille);
+                                                    quille.setTextColor(Color.argb(255, 51, 204, 51));
+                                                    quille.setEnabled(true);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }).withEndAction(new Runnable() {
+
+                                    //Action à la fin de la quatrième animation
+                                    public void run() {
+
+                                        //Mouvement de 3000px sur la droite pour réapparaitre
+                                        for (int i = 0; i < molkkyWrapper.getChildCount(); i++) {
+
+                                            molkkyWrapper.getChildAt(i).animate().x(0);
+                                        }
+
+                                        //Remise à zéro de l'affichage du score
+                                        displayScorePlayer.setText("0");
+
+                                        //Texte à afficher pour bouton score player
+                                        setScorePlayer.setText("X");
+
+                                        //Rétablissment du focus sur les boutons retour et ok
+                                        setScorePlayer.setEnabled(true);
+                                        backPlayer.setEnabled(true);
+
+                                        //Nom du nouveau joueur
+                                        displayNamePlayer.setText(GameFactory.getGameServiceImpl().getPlayerFocus().getName());
+
+                                        //Affichage de l'image correspondant au nombre de croix du joueur
+                                        displayNbrCroixPlayerFocus(GameFactory.getGameServiceImpl().getPlayerFocus());
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -590,14 +716,8 @@ public class GameActivity extends Activity{
         //Le joueur précédent deviens le joueur en cours
         playerFocus = GameFactory.getGameServiceImpl().getLastPlayer(lastScorePlayer, lastCroixPlayer);
 
-        //Modification du Nom affiché
-        displayNamePlayer.setText(playerFocus.getName());
-
         //Disparition du bouton de retour au joueur précédent (empeche les multiples retours en arriere)
         backPlayer.setVisibility(View.INVISIBLE);
-
-        //Modificcation du nombre de croix affichée
-        displayNbrCroixPlayerFocus(playerFocus);
 
         //Remise à zéro du molkky
         resetMolkky(wrapperMolkky);
@@ -797,6 +917,101 @@ public class GameActivity extends Activity{
 
             txtViewWrapper.addView(scoreJoueur);
         }
+        popup.show();
+    }
+
+    /**
+     * Affichage d'un rappel pour l'utilisation de l'application
+     *
+     * @param v Bouton cliqué
+     */
+    public void showHelp(View v) {
+
+        //Création popup
+        popup = new Dialog(v.getContext());
+        popup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        //Barre bleue de séparation du popup entre titre et contenu à rendre trnsparent
+        int divierId = popup.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
+        View divider = popup.findViewById(divierId);
+        if (divider != null) {
+            divider.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        ScrollView scroll = new ScrollView(this);
+        scroll.setFillViewport(true);
+        scroll.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+
+                //Swipe sur popup
+                if (gDetector.onTouchEvent(event)) {
+
+                    //Fermeture popup
+                    popup.dismiss();
+                    return true;
+                } else {
+
+                }
+                return true;
+            }
+        });
+        popup.setContentView(scroll);
+
+        LinearLayout.LayoutParams lpPopupWrapper = new LinearLayout.LayoutParams(generalWrapper.getWidth() - generalWrapper.getPaddingLeft() * 2, generalWrapper.getHeight());
+        lpPopupWrapper.leftMargin = generalWrapper.getPaddingLeft();
+
+        //Taille police pour dialog
+        int fontSizeDialog = ViewsMaker.getFontSizeWithScreenWidth(popup.getContext()) - 4;
+
+        //Conteneur du popup
+        LinearLayout popupWrapper = new LinearLayout(popup.getContext());
+        popupWrapper.setOrientation(LinearLayout.VERTICAL);
+        popupWrapper.setGravity(Gravity.CENTER);
+        popupWrapper.setBackgroundResource(R.drawable.panneau_score);
+        scroll.addView(popupWrapper, lpPopupWrapper);
+
+        TextView titlePopUp = ViewsMaker.newTextView(this,
+                "Comment jouer ?",
+                fontSizeDialog,
+                Color.WHITE,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                0,
+                0,
+                0,
+                0,
+                0,
+                Gravity.CENTER_HORIZONTAL,
+                false,
+                false,
+                9999,
+                9999);
+        popupWrapper.addView(titlePopUp);
+
+        TextView rules = ViewsMaker.newTextView(this,
+                " \n Pour enregistrer un score, appuyez sur la ou les quilles correspondantes au score du joueur, et appuyez sur OK. Si le lancer est manqué, appuyez sur le bouton X. Une croix sera ajoutée au joueur \n"
+                + " \n Pour voir les scores, glissez votre doigt horizontalement sur l'écran de jeu (pas sur les quilles)\n"
+                + " \n Pour revenir au joueur précédent appuyez sur le bouton <",
+                fontSizeDialog - 1,
+                Color.WHITE,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                0,
+                0,
+                0,
+                0,
+                0,
+                Gravity.CENTER_HORIZONTAL,
+                false,
+                false,
+                9999,
+                9999);
+        rules.setSingleLine(false);
+        rules.setHorizontalFadingEdgeEnabled(false);
+        popupWrapper.addView(rules);
+
         popup.show();
     }
 

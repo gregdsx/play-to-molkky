@@ -65,6 +65,9 @@ public class SetGameActivity extends Activity implements TextWatcher {
         generalWrapper.setBackgroundResource(R.drawable.background);
         scrollCtn.addView(generalWrapper);
 
+        TextView title = ViewsMaker.newTextView(this, "Ajoutez les joueurs", ViewsMaker.getFontSizeWithScreenWidth(this), Color.BLACK, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0, 0, 0, 0, 5, Gravity.CENTER_HORIZONTAL, false, false, 9999, 9999);
+        generalWrapper.addView(title);
+
         LinearLayout btnWrapper = new LinearLayout(this);
         btnWrapper.setLayoutParams(lpWrapContent);
         btnWrapper.setOrientation(LinearLayout.HORIZONTAL);

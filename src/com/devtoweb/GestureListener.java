@@ -50,25 +50,26 @@ public class GestureListener extends SimpleOnGestureListener{
         int minSwipeVelocity = viewConfiguration.getScaledMinimumFlingVelocity();
         int maxSwipeOffPath = viewConfiguration.getScaledTouchSlop();
 
-        float start = e1.getX();
-        float end = e2.getX();
+        float startX = e1.getX();
+        float endX = e2.getX();
+        float startY = e1.getY();
+        float endY = e2.getY();
 
+        //Velocite horizontale
         if (Math.abs(velocityX) < minSwipeVelocity) {
-
             return false;
-        }
 
-        else if (start - end > minSwipeDistance) {
-
+            //Gauche a droite
+        } else if (startX - endX > minSwipeDistance) {
             return true;
 
-        } else if (end - start > minSwipeDistance) {
-
+            //Droite a gauche
+        } else if (endX - startX > minSwipeDistance) {
             return true;
 
         } else {
-
             return false;
         }
+
     }
 }

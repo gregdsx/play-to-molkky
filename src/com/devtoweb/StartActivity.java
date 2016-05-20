@@ -80,7 +80,7 @@ public class StartActivity extends Activity {
         });
         generalWrapper.addView(newGame);
 
-        instructions = ViewsMaker.newButton(this, "Instructions", ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0, false, false, 9999, 9999);
+        instructions = ViewsMaker.newButton(this, "Règles", ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0, false, false, 9999, 9999);
         instructions.setOnTouchListener(new View.OnTouchListener() {
 
             public boolean onTouch(View v, MotionEvent event) {
