@@ -20,7 +20,7 @@ import java.util.Random;
 /**
  * Classe génératrice de vues pour les Activtés
  *
- * @author Greg27
+ * @author Grégory Desormeaux
  */
 public class ViewsMaker extends Activity {
 

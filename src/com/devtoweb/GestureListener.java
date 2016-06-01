@@ -9,7 +9,7 @@ import android.view.ViewConfiguration;
 /**
  * Ecouteur de GameActivity (generalWrapper) pour la gestion des swipe : affichge des scores
  *
- * @author Greg27
+ * @author Grégory Desormeaux
  */
 public class GestureListener extends SimpleOnGestureListener{
 

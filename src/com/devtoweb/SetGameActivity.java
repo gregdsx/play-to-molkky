@@ -25,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Activité de mise en place de la partie. Enregistrement des noms et création de la partie
  *
- * @author Greg27
+ * @author Grégory Desormeaux
  */
 public class SetGameActivity extends Activity implements TextWatcher {
 

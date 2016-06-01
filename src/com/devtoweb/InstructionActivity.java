@@ -23,7 +23,7 @@ import java.util.ArrayList;
 /**
  * Activité qui contient les règles du jeu Mölkky et les explications au fonctionnement de l'apllication
  *
- * @author Greg27
+ * @author Grégory Desormeaux
  */
 public class InstructionActivity extends FragmentActivity {
 

@@ -24,7 +24,7 @@ import java.util.Collections;
 /**
  * Activité de visualisation des scores après la victoire d'un joueur
  *
- * @author Greg27
+ * @author Grégory Desormeaux
  */
 public class WinActivity extends Activity {
 

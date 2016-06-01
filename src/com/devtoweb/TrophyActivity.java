@@ -20,7 +20,7 @@ import com.devtoweb.factory.GameFactory;
 /**
  * Activité passerelle après la victoire d'un joueur. Affichage du nom du vainqueur. Possibilité de recommencer ou voir les scores généraux.
  *
- * @author Greg27
+ * @author Grégory Desormeaux
  */
 public class TrophyActivity extends Activity {
 
