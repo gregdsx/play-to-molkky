@@ -1,3 +1,9 @@
+/**
+ * Play to Mölkky a été développée pour compter et visualiser les scores des participants d'une partie du jeu Mölkky.
+ *
+ * @author Grégory Desormeaux
+ * @version 1.0
+ */
 package com.devtoweb;
 
 import android.app.Activity;
