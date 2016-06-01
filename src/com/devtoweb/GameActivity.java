@@ -101,9 +101,7 @@ public class GameActivity extends Activity{
         });
         setContentView(generalWrapper);
 
-        /**
-         * Conteneur de l'entete avec le nom du joueur et le bouton score
-         */
+        //Conteneur de l'entete avec le nom du joueur et le bouton score
         RelativeLayout.LayoutParams sizeHeaderWrapper = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         sizeHeaderWrapper.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
@@ -152,8 +150,8 @@ public class GameActivity extends Activity{
 
         //Couleur du dégradé
         int[] colorTab = new int[2];
-        colorTab[0] = Color.argb(200, 255, 255, 255);
-        colorTab[1] = Color.argb(255, 51, 204, 51);
+        colorTab[0] = Color.argb(100, 255, 255, 255);
+        colorTab[1] = Color.argb(100, 51, 204, 51);
 
         //Background en dégradé
         GradientDrawable bkgNamePlayer = new GradientDrawable();
@@ -182,9 +180,7 @@ public class GameActivity extends Activity{
         displayNamePlayer.setBackground(bkgNamePlayer);
         headerWrapper.addView(displayNamePlayer);
 
-        /**
-         * MOLKKY-------------------------------------------------------------------------
-         */
+        //MOLKKY-------------------------------------------------------------------------
         wrapperMolkky = new LinearLayout(this);
         wrapperMolkky.setOrientation(LinearLayout.VERTICAL);
         wrapperMolkky.setBackgroundResource(R.drawable.grass_mollky);
@@ -197,9 +193,7 @@ public class GameActivity extends Activity{
 
         generalWrapper.addView(wrapperMolkky, sizeMolkkyWrapper);
 
-        /**
-         * Première ligne
-         */
+        //Première ligne
         RelativeLayout firstRow = new RelativeLayout(this);
         firstRow.setLayoutParams(sizeRows);
         wrapperMolkky.addView(firstRow);
@@ -213,9 +207,7 @@ public class GameActivity extends Activity{
         Button q8 = ViewsMaker.newKeel(this, "8", 8, setScore, RelativeLayout.RIGHT_OF, q9.getId());
         firstRow.addView(q8);
 
-        /**
-         * Seconde ligne
-         */
+        //Seconde ligne
         RelativeLayout secondRow = new RelativeLayout(this);
         secondRow.setLayoutParams(sizeRows);
         wrapperMolkky.addView(secondRow);
@@ -232,9 +224,7 @@ public class GameActivity extends Activity{
         Button q6 = ViewsMaker.newKeel(this, "6", 6, setScore, RelativeLayout.RIGHT_OF, q12.getId());
         secondRow.addView(q6);
 
-        /**
-         * Troisieme ligne
-         */
+        //Troisieme ligne
         RelativeLayout thirdRow = new RelativeLayout(this);
         thirdRow.setLayoutParams(sizeRows);
         wrapperMolkky.addView(thirdRow);
@@ -248,9 +238,7 @@ public class GameActivity extends Activity{
         Button q4 = ViewsMaker.newKeel(this, "4", 4, setScore, RelativeLayout.RIGHT_OF, q10.getId());
         thirdRow.addView(q4);
 
-        /**
-         * Quatrieme ligne
-         */
+        //Quatrieme ligne
         RelativeLayout fourthRow = new RelativeLayout(this);
         fourthRow.setLayoutParams(sizeRows);
         wrapperMolkky.addView(fourthRow);
@@ -269,12 +257,8 @@ public class GameActivity extends Activity{
         Button q2 = ViewsMaker.newKeel(this, "2", 2, setScore, RelativeLayout.RIGHT_OF, space.getId());
         fourthRow.addView(q2);
 
-        /**
-         * FIN MOLKKY-------------------------------------------------------------------------
-         */
-        /**
-         * Conteneur des boutons précédent, ok et l'affichage du score
-         */
+        //FIN MOLKKY-------------------------------------------------------------------------
+        //Conteneur des boutons précédent, ok et l'affichage du score
         RelativeLayout.LayoutParams sizeFooterWrapper = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         sizeFooterWrapper.addRule(RelativeLayout.BELOW, wrapperMolkky.getId());
 
