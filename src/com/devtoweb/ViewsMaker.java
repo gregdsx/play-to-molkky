@@ -43,21 +43,16 @@ public class ViewsMaker extends Activity {
         Button button;
         int marginBtns = getDpFromPixel(context, 5);
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "komika_hand.ttf");
-        /**
-         * Génération d'un id "unique" (Integer)
-         */
+
+        //Génération d'un id "unique" (Integer)
         Random r = new Random();
         r.nextInt();
         int buttonsId = r.nextInt(100000);
 
-        /**
-         * Si bouton en position relative
-         */
+        //Si bouton en position relative
         if (relOrLinear) {
 
-            /**
-             * Largeur, Hauteur et marges du bouton
-             */
+            //Largeur, Hauteur et marges du bouton
             RelativeLayout.LayoutParams sizeButton = new RelativeLayout.LayoutParams(width, height);
 
             //Si règle de position définie avec un id
@@ -71,9 +66,7 @@ public class ViewsMaker extends Activity {
 
             sizeButton.setMargins(marginBtns, marginBtns, marginBtns, marginBtns);
 
-            /**
-             * Création du bouton
-             */
+            //Création du bouton
             button = new Button(context);
             button.setText(text);
             button.setLayoutParams(sizeButton);
@@ -83,15 +76,11 @@ public class ViewsMaker extends Activity {
 
         } else {
 
-            /**
-             * Largeur, Hauteur, Poids et marges du bouton
-             */
+            //Largeur, Hauteur, Poids et marges du bouton
             LinearLayout.LayoutParams sizeButton = new LinearLayout.LayoutParams(width, height, weight);
             sizeButton.setMargins(marginBtns, marginBtns, marginBtns, marginBtns);
 
-            /**
-             * Création du bouton
-             */
+            //Création du bouton
             button = new Button(context);
             button.setText(text);
             button.setLayoutParams(sizeButton);
@@ -122,9 +111,7 @@ public class ViewsMaker extends Activity {
         EditText editText;
         Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/" + "komika_hand.ttf");
 
-        /**
-         * Génération d'un id "unique" (Integer)
-         */
+        //Génération d'un id "unique" (Integer)
         Random r = new Random();
         r.nextInt();
         int etId = r.nextInt(100000);
@@ -135,9 +122,7 @@ public class ViewsMaker extends Activity {
         LinearLayout.LayoutParams sizeEditText = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         sizeEditText.setMargins(0, marginTopBottomEdTxt, 0, marginTopBottomEdTxt);
 
-        /**
-         * Hauteur des EditText | Récupération de la taille en DP transformée en PX | height = 60dp
-         */
+        //Hauteur des EditText | Récupération de la taille en DP transformée en PX | height = 60dp
         int heightEdTxt = getDpFromPixel(context, 50);
 
         //Création de l'edittext
@@ -250,14 +235,10 @@ public class ViewsMaker extends Activity {
             textView.setId(id);
         }
 
-        /**
-         * Si textview en position relative
-         */
+        //Si textview en position relative
         if (relOrNot) {
 
-            /**
-             * Largeur, Hauteur et marges du bouton
-             */
+            //Largeur, Hauteur et marges du bouton
             RelativeLayout.LayoutParams sizeTxtView = new RelativeLayout.LayoutParams(width, height);
             sizeTxtView.setMargins(getDpFromPixel(context, marginLeft), getDpFromPixel(context, marginTop), getDpFromPixel(context, marginRight), getDpFromPixel(context, marginBottom));
 
@@ -274,9 +255,7 @@ public class ViewsMaker extends Activity {
 
         } else {
 
-            /**
-             * Largeur, Hauteur, Poids et marges du bouton
-             */
+            //Largeur, Hauteur, Poids et marges du bouton
             LinearLayout.LayoutParams sizeTxtView = new LinearLayout.LayoutParams(width, height, weight);
             sizeTxtView.setMargins(getDpFromPixel(context, marginLeft), getDpFromPixel(context, marginTop), getDpFromPixel(context, marginRight), getDpFromPixel(context, marginBottom));
 

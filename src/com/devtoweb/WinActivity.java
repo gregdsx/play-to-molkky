@@ -50,9 +50,7 @@ public class WinActivity extends Activity {
         generalWrapper.setPadding(paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper, paddingGeneralWrapper);
         scroll.addView(generalWrapper);
 
-        /**
-         * Conteneur du logo
-         */
+        //Conteneur du logo
         LinearLayout logoWrapper = new LinearLayout(this);
         logoWrapper.setLayoutParams(lpWrapContent);
         logoWrapper.setLayoutDirection(LinearLayout.HORIZONTAL);
@@ -69,9 +67,7 @@ public class WinActivity extends Activity {
         logo.setBackgroundResource(R.drawable.logo_fin);
         logoWrapper.addView(logo);
 
-        /**
-         * Conteneur du tableau des scores
-         */
+        //Conteneur du tableau des scores
         RelativeLayout.LayoutParams sizeScoreWrapper = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int marginLeftRightScoreWrapper = ViewsMaker.getDpFromPixel(this, 20);
         int marginTopScoreWrapper = ViewsMaker.getDpFromPixel(this, 5);
@@ -90,9 +86,7 @@ public class WinActivity extends Activity {
         //Création du tableau des scrores
         setAndDisplayScoresTable();
 
-        /**
-         * Conteneur des boutons
-         */
+        //Conteneur des boutons
         RelativeLayout.LayoutParams sizeBtnWrapper = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         sizeBtnWrapper.addRule(RelativeLayout.BELOW, scoreWrapper.getId());
 
@@ -210,6 +204,7 @@ public class WinActivity extends Activity {
 
         Drawable nbrCroixPlayer = null;
 
+        //Vérif nombre de croix du joueur
         switch (croixPLayer) {
 
             case 0:

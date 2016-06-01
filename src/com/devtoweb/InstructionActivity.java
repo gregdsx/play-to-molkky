@@ -148,8 +148,8 @@ public class InstructionActivity extends FragmentActivity {
             rule1wrapper.addView(markerSlides);
 
             TextView rule1 = new TextView(getContext());
-            rule1.setText("Le principe du jeu est de faire tomber les quilles en bois à l’aide du lanceur appelé Mölkky. Les quilles sont marquées de 1 à 12. Le premier ou la première à totaliser exactement 50 points gagne la partie.\n"
-                    + "\n" + "Au début d’une partie, les quilles sont placées à environ 4 mètres des joueurs. Lorsqu’une quille a été abattue, on la redresse sur son pied (et non à la tête), le numéro face à la zone de lancer, juste là où elle se trouve et sans la soulever du sol. C’est ainsi qu’au cours de la partie, les quilles s’éparpillent et s’éloignent.");
+            rule1.setText("Le principe du jeu est de faire tomber les quilles en bois à l\'aide du lanceur appelé Mölkky. Les quilles sont marquées de 1 à 12. Le premier ou la première à totaliser exactement 50 points gagne la partie.\n"
+                    + "\n" + "Au début d\'une partie, les quilles sont placées à environ 4 mètres des joueurs. Lorsqu’une quille a été abattue, on la redresse sur son pied (et non à la tête), le numéro face à la zone de lancer, juste là où elle se trouve et sans la soulever du sol. C’est ainsi qu’au cours de la partie, les quilles s’éparpillent et s’éloignent.");
             rule1.setTextColor(Color.BLACK);
             rule1.setTextSize(16);
             rule1wrapper.addView(rule1);

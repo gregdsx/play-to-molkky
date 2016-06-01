@@ -92,9 +92,8 @@ public class SetGameActivity extends Activity implements TextWatcher {
         play.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                /**
-                 * Récupération du type de jeu et du nombre de joueur Lancement de la partie Début GameActivity
-                 */
+
+                //Récupération du type de jeu et du nombre de joueur Lancement de la partie Début GameActivity
                 setGame(v);
             }
         });
@@ -119,9 +118,8 @@ public class SetGameActivity extends Activity implements TextWatcher {
         addPlayer.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                /**
-                 * Nouvel editText pour nouvelle entrée
-                 */
+
+                //Nouvel editText pour nouvelle entrée
                 setNewPlayerEditText();
             }
         });
@@ -237,9 +235,7 @@ public class SetGameActivity extends Activity implements TextWatcher {
 
                 public boolean onTouch(View v2, MotionEvent event) {
 
-                    /**
-                     * Gestion de la suppression de l'EditText concerné si click sur drawable supprimer
-                     */
+                    //Gestion de la suppression de l'EditText concerné si click sur drawable supprimer
                     EditText et = (EditText) v2;
 
                     //Détection de l'action sur l'ecran
@@ -385,9 +381,7 @@ public class SetGameActivity extends Activity implements TextWatcher {
      */
     public void afterTextChanged(Editable s) {
 
-        /**
-         * Supprimer le dernier caractere ou interdire de le taper | Vérifier caracteres tapés
-         */
+        //Supprimer le dernier caractere ou interdire de le taper | Vérifier caracteres tapés
         //Nombre caractère max
         int maxCar = 15;
         //Caractères interdits
